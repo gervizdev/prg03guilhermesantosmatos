@@ -32,7 +32,14 @@ public class MainFrame extends javax.swing.JFrame {
         ajustarImagens();
 
         // Atualiza a imagem sempre que o label for redimensionado
-        jLabel1.addComponentListener(new ComponentAdapter() {
+        imgPessoa.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                ajustarImagens();
+            }
+        });
+        
+        Calcular.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
                 ajustarImagens();
@@ -48,12 +55,12 @@ public class MainFrame extends javax.swing.JFrame {
     IdadeCalculada.setText(String.valueOf(idade));
 }
 
-    
+    //ajusta imagens
     private void ajustarImagens() {
-    if (originalPessoa != null && jLabel1.getWidth() > 0 && jLabel1.getHeight() > 0) {
+    if (originalPessoa != null && imgPessoa.getWidth() > 0 && imgPessoa.getHeight() > 0) {
         Image imagemRedimensionada = originalPessoa.getImage().getScaledInstance(
-                jLabel1.getWidth(), jLabel1.getHeight(), Image.SCALE_SMOOTH);
-        jLabel1.setIcon(new ImageIcon(imagemRedimensionada));
+                imgPessoa.getWidth(), imgPessoa.getHeight(), Image.SCALE_SMOOTH);
+        imgPessoa.setIcon(new ImageIcon(imagemRedimensionada));
     }
     if (originalCalc != null && Calcular.getWidth() > 0 && Calcular.getHeight() > 0) {
         Image imagemRedimensionada = originalCalc.getImage().getScaledInstance(
@@ -77,7 +84,7 @@ public class MainFrame extends javax.swing.JFrame {
         Calcular = new javax.swing.JButton();
         Idade = new javax.swing.JLabel();
         IdadeCalculada = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        imgPessoa = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Calculadora de idade");
@@ -100,7 +107,7 @@ public class MainFrame extends javax.swing.JFrame {
         IdadeCalculada.setForeground(new java.awt.Color(255, 0, 0));
         IdadeCalculada.setText("0");
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/ifba/atividade03/images/pessoa.jpeg"))); // NOI18N
+        imgPessoa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/ifba/atividade03/images/pessoa.jpeg"))); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -119,7 +126,7 @@ public class MainFrame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(yearSelector, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(imgPessoa, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(68, 68, 68))
         );
         layout.setVerticalGroup(
@@ -127,7 +134,7 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(38, 38, 38)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(imgPessoa, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtAnoNasc)
@@ -183,7 +190,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton Calcular;
     private javax.swing.JLabel Idade;
     private javax.swing.JLabel IdadeCalculada;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel imgPessoa;
     private javax.swing.JLabel txtAnoNasc;
     private javax.swing.JSpinner yearSelector;
     // End of variables declaration//GEN-END:variables
