@@ -65,7 +65,7 @@ public class MainFrame extends javax.swing.JFrame {
     public int GerarNumeroAleatorio() {
        return (int)(Math.random() * 5) + 1;
     }
-    // checa se dois numeros são iguaisã
+    // checa se dois numeros são iguais
     public boolean ChecarSeDoisNumerosSaoIguais (int num1, int num2) {
         return num1 == num2;
     }
@@ -97,6 +97,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         Palpite.setText("Palpite");
         getContentPane().add(Palpite, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, -1, -1));
+        //confere se o usuario acertou e adiciona o texto correspondente no label
         Palpite.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 int palpite = (int) SelectPalpite.getValue();
