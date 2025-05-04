@@ -4,19 +4,71 @@
  */
 package br.com.ifba.atividade04.view;
 
+import javax.swing.SpinnerNumberModel;
+import javax.swing.JSpinner;
+import java.awt.Image;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author gerviz
  */
 public class MainFrame extends javax.swing.JFrame {
 
+    private ImageIcon genio;
+    private ImageIcon Balao;
+
     /**
      * Creates new form MainFrame
      */
     public MainFrame() {
         initComponents();
-    }
+        // Carrega a imagem original
+        Balao = new ImageIcon(getClass().getResource("/br/com/ifba/atividade04/images/BalãoDeFala.png"));
+        genio = new ImageIcon(getClass().getResource("/br/com/ifba/atividade04/images/gênio.jpg"));
+        // Redimensiona ao iniciar
+        ajustarImagens();
 
+        // Atualiza a imagem sempre que o label for redimensionado
+        Genio.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                ajustarImagens();
+            }
+        });
+
+        BalaoDeFala.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                ajustarImagens();
+            }
+        });
+    }
+    //ajusta imagens
+
+    private void ajustarImagens() {
+        if (Balao != null && Genio.getWidth() > 0 && Genio.getHeight() > 0) {
+            Image imagemRedimensionada = Balao.getImage().getScaledInstance(
+                    Genio.getWidth(), Genio.getHeight(), Image.SCALE_SMOOTH);
+            Genio.setIcon(new ImageIcon(imagemRedimensionada));
+        }
+        if (genio != null && BalaoDeFala.getWidth() > 0 && BalaoDeFala.getHeight() > 0) {
+            Image imagemRedimensionada;
+            imagemRedimensionada = genio.getImage().getScaledInstance(
+                    BalaoDeFala.getWidth(), BalaoDeFala.getHeight(), Image.SCALE_SMOOTH);
+            BalaoDeFala.setIcon(new ImageIcon(imagemRedimensionada));
+        }
+    }
+    // gera um numerode 1 a 5
+    public int GerarNumeroAleatorio() {
+       return (int)(Math.random() * 5) + 1;
+    }
+    // checa se dois numeros são iguaisã
+    public boolean ChecarSeDoisNumerosSaoIguais (int num1, int num2) {
+        return num1 == num2;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -26,18 +78,42 @@ public class MainFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        MainText = new javax.swing.JLabel();
+        SelectPalpite = new JSpinner(new SpinnerNumberModel(1, 1, 5, 1));
+        Genio = new javax.swing.JLabel();
+        Palpite = new javax.swing.JButton();
+        BalaoDeFala = new javax.swing.JLabel();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        MainText.setFont(new java.awt.Font("Liberation Sans", 0, 10)); // NOI18N
+        MainText.setText("<html>vou pensar em um número,tente adivinha-lo</html>");
+        getContentPane().add(MainText, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, 150, 60));
+        getContentPane().add(SelectPalpite, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, -1, -1));
+
+        Genio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/ifba/atividade04/images/BalãoDeFala.png"))); // NOI18N
+        getContentPane().add(Genio, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, -20, 210, 170));
+
+        Palpite.setText("Palpite");
+        getContentPane().add(Palpite, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, -1, -1));
+        Palpite.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                int palpite = (int) SelectPalpite.getValue();
+                int numeroSorteado = GerarNumeroAleatorio();
+
+                boolean acertou = ChecarSeDoisNumerosSaoIguais(palpite, numeroSorteado);
+
+                if (acertou) {
+                    MainText.setText("parabéns, você acertou!!!");
+                } else {
+                    MainText.setText("errou! o número era: " + numeroSorteado);
+                }
+            }
+        });
+
+        BalaoDeFala.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/ifba/atividade04/images/gênio.jpg"))); // NOI18N
+        getContentPane().add(BalaoDeFala, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 60, 140, 180));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -78,5 +154,10 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel BalaoDeFala;
+    private javax.swing.JLabel Genio;
+    public javax.swing.JLabel MainText;
+    private javax.swing.JButton Palpite;
+    private javax.swing.JSpinner SelectPalpite;
     // End of variables declaration//GEN-END:variables
 }
