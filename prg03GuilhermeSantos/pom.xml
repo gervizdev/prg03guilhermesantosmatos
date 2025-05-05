@@ -9,7 +9,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
-        <exec.mainClass>br.ifba.com.preg03guilhermesantos.Preg03GuilhermeSantos</exec.mainClass>
+        <exec.mainClass>br.ifba.com.prg03guilhermesantos.Prg03GuilhermeSantos</exec.mainClass>
     </properties>
     <name>prg03GuilhermeSantos</name>
 </project>
