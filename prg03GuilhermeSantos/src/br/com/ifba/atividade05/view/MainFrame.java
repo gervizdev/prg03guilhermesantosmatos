@@ -17,45 +17,45 @@ public class MainFrame extends javax.swing.JFrame {
         initComponents();
         
         //atualiza os sliders comforme as definições
-        comeco.addChangeListener(e -> {
+        sldComeco.addChangeListener(e -> {
             changePassoMax();
-            passo.setMinimum(1);
-            int valor = comeco.getValue();
-            numIni.setText(String.valueOf(valor));
-            if(fim.getValue() <= valor){
-                fim.setValue(valor+1);
+            sldPasso.setMinimum(1);
+            int valor = sldComeco.getValue();
+            lblNumIni.setText(String.valueOf(valor));
+            if(sldFim.getValue() <= valor){
+                sldFim.setValue(valor+1);
             }
         });
 
-        fim.addChangeListener(e -> {
+        sldFim.addChangeListener(e -> {
             changePassoMax();
-            passo.setMinimum(1);
-            int valor = fim.getValue();
-            numFim.setText(String.valueOf(valor));
-            if (comeco.getValue() >= valor){
-            comeco.setValue(valor - 1);
+            sldPasso.setMinimum(1);
+            int valor = sldFim.getValue();
+            lblNumFim.setText(String.valueOf(valor));
+            if (sldComeco.getValue() >= valor){
+            sldComeco.setValue(valor - 1);
             }
         });
 
-        passo.addChangeListener(e -> {
-            int valor = passo.getValue();
-            numPass.setText(String.valueOf(valor));
-            if(passo.getValue() == 0){
-            passo.setValue(1);
+        sldPasso.addChangeListener(e -> {
+            int valor = sldPasso.getValue();
+            lblNumPass.setText(String.valueOf(valor));
+            if(sldPasso.getValue() == 0){
+            sldPasso.setValue(1);
             }
         });
     }
     //muda o maximo do passo
     private void changePassoMax() {
-    int passoMax = fim.getValue() - comeco.getValue();
+    int passoMax = sldFim.getValue() - sldComeco.getValue();
 
-    passo.setMaximum(passoMax);
+    sldPasso.setMaximum(passoMax);
 
-    if (passo.getValue() > passoMax) {
-        passo.setValue(passoMax);
+    if (sldPasso.getValue() > passoMax) {
+        sldPasso.setValue(passoMax);
     }
 
-    numPass.setText(String.valueOf(passo.getValue()));
+    lblNumPass.setText(String.valueOf(sldPasso.getValue()));
 }
 
     
@@ -68,43 +68,48 @@ public class MainFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        comeco = new javax.swing.JSlider();
-        fim = new javax.swing.JSlider();
-        passo = new javax.swing.JSlider();
-        contar = new javax.swing.JButton();
-        numIni = new javax.swing.JLabel();
-        numFim = new javax.swing.JLabel();
-        numPass = new javax.swing.JLabel();
-        numIni1 = new javax.swing.JLabel();
-        numFim1 = new javax.swing.JLabel();
-        numPass1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        sldComeco = new javax.swing.JSlider();
+        sldFim = new javax.swing.JSlider();
+        sldPasso = new javax.swing.JSlider();
+        btnContar = new javax.swing.JButton();
+        lblNumIni = new javax.swing.JLabel();
+        lblNumFim = new javax.swing.JLabel();
+        lblNumPass = new javax.swing.JLabel();
+        lblIniTxt = new javax.swing.JLabel();
+        lblFimTxt = new javax.swing.JLabel();
+        lblPassTxt = new javax.swing.JLabel();
+        scrlNumFinalTxt = new javax.swing.JScrollPane();
         nums = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        comeco.setMaximum(10);
-        comeco.setValue(0);
-        comeco.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        comeco.setDoubleBuffered(true);
-        getContentPane().add(comeco, new org.netbeans.lib.awtextra.AbsoluteConstraints(82, 14, -1, -1));
+        sldComeco.setMaximum(10);
+        sldComeco.setValue(0);
+        sldComeco.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        sldComeco.setDoubleBuffered(true);
+        getContentPane().add(sldComeco, new org.netbeans.lib.awtextra.AbsoluteConstraints(82, 14, -1, -1));
 
-        fim.setMinimum(1);
-        fim.setValue(10);
-        getContentPane().add(fim, new org.netbeans.lib.awtextra.AbsoluteConstraints(82, 40, -1, -1));
+        sldFim.setMinimum(1);
+        sldFim.setValue(10);
+        getContentPane().add(sldFim, new org.netbeans.lib.awtextra.AbsoluteConstraints(82, 40, -1, -1));
 
-        passo.setMinimum(1);
-        passo.setValue(2);
-        getContentPane().add(passo, new org.netbeans.lib.awtextra.AbsoluteConstraints(82, 66, -1, -1));
+        sldPasso.setMinimum(1);
+        sldPasso.setValue(2);
+        getContentPane().add(sldPasso, new org.netbeans.lib.awtextra.AbsoluteConstraints(82, 66, -1, -1));
 
-        contar.setText("contar");
-        getContentPane().add(contar, new org.netbeans.lib.awtextra.AbsoluteConstraints(142, 104, -1, -1));
+        btnContar.setText("contar");
+        btnContar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnContarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnContar, new org.netbeans.lib.awtextra.AbsoluteConstraints(142, 104, -1, -1));
         // conta e adiciona no textArea
-        contar.addActionListener(e -> {
-            int inicio = comeco.getValue();
-            int fimValor = fim.getValue();
-            int passoValor = passo.getValue();
+        btnContar.addActionListener(e -> {
+            int inicio = sldComeco.getValue();
+            int fimValor = sldFim.getValue();
+            int passoValor = sldPasso.getValue();
 
             StringBuilder contagem = new StringBuilder();
 
@@ -115,35 +120,39 @@ public class MainFrame extends javax.swing.JFrame {
             nums.setText(contagem.toString());
         });
 
-        numIni.setText("0");
-        getContentPane().add(numIni, new org.netbeans.lib.awtextra.AbsoluteConstraints(288, 14, 17, -1));
+        lblNumIni.setText("0");
+        getContentPane().add(lblNumIni, new org.netbeans.lib.awtextra.AbsoluteConstraints(288, 14, 17, -1));
 
-        numFim.setText("10");
-        getContentPane().add(numFim, new org.netbeans.lib.awtextra.AbsoluteConstraints(288, 40, -1, -1));
+        lblNumFim.setText("10");
+        getContentPane().add(lblNumFim, new org.netbeans.lib.awtextra.AbsoluteConstraints(288, 40, -1, -1));
 
-        numPass.setText("2");
-        getContentPane().add(numPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(288, 68, -1, -1));
+        lblNumPass.setText("2");
+        getContentPane().add(lblNumPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(288, 68, -1, -1));
 
-        numIni1.setText("Inicio:");
-        getContentPane().add(numIni1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 18, -1, -1));
+        lblIniTxt.setText("Inicio:");
+        getContentPane().add(lblIniTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 18, -1, -1));
 
-        numFim1.setText("Fim:");
-        getContentPane().add(numFim1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 42, -1, -1));
+        lblFimTxt.setText("Fim:");
+        getContentPane().add(lblFimTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 42, -1, -1));
 
-        numPass1.setText("Passo:");
-        getContentPane().add(numPass1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 68, -1, -1));
+        lblPassTxt.setText("Passo:");
+        getContentPane().add(lblPassTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 68, -1, -1));
 
-        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scrlNumFinalTxt.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         nums.setEditable(false);
         nums.setColumns(20);
         nums.setRows(5);
-        jScrollPane1.setViewportView(nums);
+        scrlNumFinalTxt.setViewportView(nums);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 10, 180, 280));
+        getContentPane().add(scrlNumFinalTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 10, 180, 280));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnContarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnContarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -181,17 +190,17 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JSlider comeco;
-    private javax.swing.JButton contar;
-    private javax.swing.JSlider fim;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel numFim;
-    private javax.swing.JLabel numFim1;
-    private javax.swing.JLabel numIni;
-    private javax.swing.JLabel numIni1;
-    private javax.swing.JLabel numPass;
-    private javax.swing.JLabel numPass1;
+    private javax.swing.JButton btnContar;
+    private javax.swing.JLabel lblFimTxt;
+    private javax.swing.JLabel lblIniTxt;
+    private javax.swing.JLabel lblNumFim;
+    private javax.swing.JLabel lblNumIni;
+    private javax.swing.JLabel lblNumPass;
+    private javax.swing.JLabel lblPassTxt;
     private javax.swing.JTextArea nums;
-    private javax.swing.JSlider passo;
+    private javax.swing.JScrollPane scrlNumFinalTxt;
+    private javax.swing.JSlider sldComeco;
+    private javax.swing.JSlider sldFim;
+    private javax.swing.JSlider sldPasso;
     // End of variables declaration//GEN-END:variables
 }

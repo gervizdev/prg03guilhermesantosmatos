@@ -25,7 +25,7 @@
     <Property name="useNullLayout" type="boolean" value="false"/>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JLabel" name="MainText">
+    <Component class="javax.swing.JLabel" name="lblMainText">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Liberation Sans" size="10" style="0"/>
@@ -43,7 +43,7 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="javax.swing.JSpinner" name="SelectPalpite">
+    <Component class="javax.swing.JSpinner" name="spnSelectPalpite">
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new JSpinner(new SpinnerNumberModel(1, 1, 5, 1));"/>
       </AuxValues>
@@ -53,7 +53,7 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="javax.swing.JLabel" name="Genio">
+    <Component class="javax.swing.JLabel" name="lblGenio">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/br/com/ifba/atividade04/images/Bal&#xe3;oDeFala.png"/>
@@ -65,12 +65,12 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="javax.swing.JButton" name="Palpite">
+    <Component class="javax.swing.JButton" name="btnPalpite">
       <Properties>
         <Property name="text" type="java.lang.String" value="Palpite"/>
       </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="//confere se o usuario acertou e adiciona o texto correspondente no label&#xa;Palpite.addActionListener(new java.awt.event.ActionListener() {&#xa;    public void actionPerformed(java.awt.event.ActionEvent evt) {&#xa;        int palpite = (int) SelectPalpite.getValue();&#xa;        int numeroSorteado = GerarNumeroAleatorio();&#xa;&#xa;        boolean acertou = ChecarSeDoisNumerosSaoIguais(palpite, numeroSorteado);&#xa;&#xa;        if (acertou) {&#xa;            MainText.setText(&quot;parab&#xe9;ns, voc&#xea; acertou!!!&quot;);&#xa;        } else {&#xa;            MainText.setText(&quot;errou! o n&#xfa;mero era: &quot; + numeroSorteado);&#xa;        }&#xa;    }&#xa;});"/>
+        <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="//confere se o usuario acertou e adiciona o texto correspondente no label&#xa;btnPalpite.addActionListener(new java.awt.event.ActionListener() {&#xa;    public void actionPerformed(java.awt.event.ActionEvent evt) {&#xa;        int palpite = (int) spnSelectPalpite.getValue();&#xa;        int numeroSorteado = GerarNumeroAleatorio();&#xa;&#xa;        boolean acertou = ChecarSeDoisNumerosSaoIguais(palpite, numeroSorteado);&#xa;&#xa;        if (acertou) {&#xa;            lblMainText.setText(&quot;parab&#xe9;ns, voc&#xea; acertou!!!&quot;);&#xa;        } else {&#xa;            lblMainText.setText(&quot;errou! o n&#xfa;mero era: &quot; + numeroSorteado);&#xa;        }&#xa;    }&#xa;});"/>
         <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="MainFrame_Palpite"/>
       </AuxValues>
       <Constraints>
@@ -79,7 +79,7 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="javax.swing.JLabel" name="BalaoDeFala">
+    <Component class="javax.swing.JLabel" name="lblBalaoDeFala">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/br/com/ifba/atividade04/images/g&#xea;nio.jpg"/>
