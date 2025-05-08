@@ -20,21 +20,24 @@ public class MainFrame extends javax.swing.JFrame {
      */
     public MainFrame() {
         initComponents();
-
+        //adiciona a logica ao botao de calcular
         btnCalcular.addActionListener(e -> {
             int valor = (int) spnNum.getValue();
             if (valor < 1) {
+                // exibe erro caso tenha uma entrada invalida
                 JOptionPane.showMessageDialog(this, "valores como 0 ou numeros"
                         + " negativos não são aceitos");
             } else {
+                //chama a funcao de calcular o fatorial e muda o valor no label
                 lblResultado.setText("Resultado: "
                         + controller.getFatorial(valor));
-
+                //chama a funcao de pegar a formula, concatena com igual e
+                //concatena novamente com o retorno da funcao getFatorial
                 txtFormula.setText(controller.getFormula(valor)
                         + " = " + controller.getFatorial(valor));
             }
         });
-
+        //define maximo e minimo no Spinner
         spnNum.setModel(new javax.swing.SpinnerNumberModel(1, 1, 30, 1)); // min 1, max 30
 
     }
