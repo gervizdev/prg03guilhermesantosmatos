@@ -21,7 +21,7 @@ public class MainFrame extends javax.swing.JFrame {
      */
     public MainFrame() {
         initComponents();
-
+//checa se tem algum item selecionado na lista e adiciona um elemento no local
         btnAdd.addActionListener(e -> {
             int index = lstItens.getSelectedIndex();
             if (index >= 0 && index < 10) {
@@ -32,7 +32,7 @@ public class MainFrame extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Selecione um item primeiro.");
             }
         });
-
+//checa se tem algum item selecionado na lista e remove um elemento no local
         btnRemove.addActionListener(e -> {
             int index = lstItens.getSelectedIndex();
             if (index >= 0) {
@@ -43,14 +43,14 @@ public class MainFrame extends javax.swing.JFrame {
             }
 
         });
-
+//ordena a lista
         btnOrdena.addActionListener(e -> {
             controller.ordenar();
             atualizarLista();
         });
 
     }
-
+//atualiza a lista na tela
     private void atualizarLista(){
     List<Integer> dados = controller.getLista();
     String[] itens = new String[dados.size()];
