@@ -11,6 +11,8 @@ import javax.swing.JOptionPane;
  *
  * @author gerviz
  */
+
+//calcula, cria e imprime o recibo referente ao metodo de pagamento
 public class CardPayment implements paymentInterface {
     private double valor;
     public double calcularTotal(double valor){

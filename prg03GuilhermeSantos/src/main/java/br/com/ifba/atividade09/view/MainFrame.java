@@ -82,10 +82,11 @@ public class MainFrame extends javax.swing.JFrame {
   }// </editor-fold>//GEN-END:initComponents
 
   private void btnPayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPayActionPerformed
+    //variaveis
     int PaymentType = (int) bxInPayMet.getSelectedIndex();
     String valueIn = txtInValue.getText().trim();
     String NameIn = txtInName.getText().trim();
-
+    //checa se o campo de nome esta vazio
     if (NameIn.isEmpty()) {
       JOptionPane.showMessageDialog(
           this,
@@ -95,7 +96,7 @@ public class MainFrame extends javax.swing.JFrame {
       );
       return;
     }
-
+    //checa se o campo de valor esta vazio
     if (valueIn.isEmpty()) {
       JOptionPane.showMessageDialog(
           this,
@@ -105,7 +106,7 @@ public class MainFrame extends javax.swing.JFrame {
       );
       return;
     }
-
+    //checa se o numero digitado e
     double valor;
     try {
       valor = Double.parseDouble(valueIn);
@@ -117,7 +118,7 @@ public class MainFrame extends javax.swing.JFrame {
             JOptionPane.ERROR_MESSAGE
         );
         return;
-      }
+      }//checa se o item digitado é n
     } catch (NumberFormatException e) {
       JOptionPane.showMessageDialog(
           this,
@@ -127,7 +128,7 @@ public class MainFrame extends javax.swing.JFrame {
       );
       return;
     }
-
+    //chama as funcoes pela interface
     paymentInterface pagamento = null;
     switch (PaymentType) {
 
