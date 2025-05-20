@@ -6,26 +6,45 @@ package br.com.ifba.atividade11.view;
 
 import br.com.ifba.atividade11.forma.FormList;
 import br.com.ifba.atividade11.forma.Forma;
+import java.awt.Component;
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.JList;
 
 /**
  *
  * @author gerviz
  */
 public class MainFrame extends javax.swing.JFrame {
+
   private FormList formList;
+
   /**
    * Creates new form MainFrame
    */
   public MainFrame() {
     this.formList = new FormList();
     initComponents();
+
+    cbFormas.setRenderer(new DefaultListCellRenderer() {
+      @Override
+      public Component getListCellRendererComponent(JList<?> list, Object value,
+          int index, boolean isSelected, boolean cellHasFocus) {
+        super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+        if (value instanceof Forma) {
+          setText(((Forma) value).getNome());
+        } else {
+          setText("");
+        }
+        return this;
+      }
+    });
+
   }
-  
 
   public void atualizarBx() {
     cbFormas.removeAllItems();
     for (Forma f : formList.getFormas()) {
-      cbFormas.addItem(f.getNome());
+      cbFormas.addItem(f);
     }
   }
 
@@ -112,7 +131,12 @@ public class MainFrame extends javax.swing.JFrame {
   }//GEN-LAST:event_btnAddFormActionPerformed
 
   private void cbFormasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFormasActionPerformed
-
+    Forma selecionada = (Forma) cbFormas.getSelectedItem();
+    if (selecionada != null) {
+      txtParameters.setText(selecionada.toString());
+    } else {
+      txtParameters.setText("");
+    }
   }//GEN-LAST:event_cbFormasActionPerformed
 
   /**
@@ -152,7 +176,7 @@ public class MainFrame extends javax.swing.JFrame {
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JToggleButton btnAddForm;
-  private javax.swing.JComboBox<String> cbFormas;
+  private javax.swing.JComboBox<Forma> cbFormas;
   private javax.swing.JScrollPane jScrollPane1;
   private javax.swing.JLabel lblTxtNameSelect;
   private javax.swing.JTextArea txtParameters;

@@ -36,6 +36,7 @@ public class Piramide extends Tridimensional{
   public String toString() {
       String parametros;
     parametros = "tipo: piramide"
+        + "\ndimensao: tridimensional"
         + "\nbase: " + getBase()
         + "\naltura: " + getAltura()
         + "\nvolume: " + obterVolume()

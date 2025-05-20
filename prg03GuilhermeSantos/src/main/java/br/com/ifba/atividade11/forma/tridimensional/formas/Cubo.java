@@ -32,6 +32,7 @@ public class Cubo extends Tridimensional {
   public String toString() {
     String parametros;
     parametros = "tipo: cubo"
+        + "\ndimensao: tridimensional"
         + "\nlado" + getLado()
         + "\nvolume: " + obterVolume()
         + "\narea: " + obterArea();

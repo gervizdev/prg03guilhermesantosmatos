@@ -30,6 +30,7 @@ public class Circulo extends Bidimensional {
   public String toString() {
     String parametros;
     parametros = "tipo: circulo"
+        + "\ndimensao: bidimensional"
         + "\nraio: " + getRaio()
         + "\narea: " + obterArea();
     return parametros;

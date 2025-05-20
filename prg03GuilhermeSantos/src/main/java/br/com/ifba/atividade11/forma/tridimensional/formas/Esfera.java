@@ -33,6 +33,7 @@ public class Esfera extends Tridimensional{
   public String toString() {
       String parametros;
     parametros = "tipo: esfera"
+        + "\ndimensao: tridimensional"
         + "\nraio: " + getRaio()
         + "\nvolume: " + obterVolume()
         + "\narea: " + obterArea();

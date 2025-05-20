@@ -25,6 +25,7 @@ public class Quadrado extends Bidimensional {
   public String toString() {
     String parametros;
     parametros = "tipo: quadrado"
+        + "\ndimensao: bidimensional"
         + "\nlado: " + getLado()
         + "\narea: " + obterArea();
     return parametros;

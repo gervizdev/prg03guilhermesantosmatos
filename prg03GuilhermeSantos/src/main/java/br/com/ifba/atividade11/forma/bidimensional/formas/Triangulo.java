@@ -43,11 +43,13 @@ public class Triangulo extends Bidimensional {
     String parametros;
     if (base > 0 && altura > 0) {
       parametros = "tipo: triangulo"
+          + "\ndimensao: bidimensional"
           + "\nbase: " + getBase()
           + "\naltura: " + getAltura()
           + "\narea: " + obterArea();
     } else {
       parametros = "tipo: triangulo"
+          + "\ndimensao: bidimensional"
           + "\nlado1: " + getLado1()
           + "\nlado2: " + getLado2()
           + "\nlado3: " + getLado3()

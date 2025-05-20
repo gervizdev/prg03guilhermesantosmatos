@@ -20,6 +20,7 @@ import org.apache.commons.lang3.math.NumberUtils;
  * @author gerviz
  */
 public class CreationFrame extends javax.swing.JFrame {
+
   private MainFrame mainFrame;
   private FormList formList;
 
@@ -28,7 +29,7 @@ public class CreationFrame extends javax.swing.JFrame {
    */
   public CreationFrame(MainFrame mainFrame, FormList formList) {
     this.mainFrame = mainFrame;
-    this.formList   = formList;
+    this.formList = formList;
     initComponents();
     esconderComponentes();
   }
@@ -51,12 +52,46 @@ public class CreationFrame extends javax.swing.JFrame {
     }
     lblTxtName.setVisible(ok);
     txtInputName.setVisible(ok);
-    if (txtInputName.isVisible()) {
-      if (!txtInputName.getText().trim().isEmpty()){
-      btnAdd.setVisible(true);
+    if (ok) {
+      if (txtInputName.isVisible()) {
+        if (!txtInputName.getText().trim().isEmpty()) {
+          btnAdd.setVisible(true);
+        }
+      }
+    } else {
+      btnAdd.setVisible(false);
+    }
+  }
+
+  private boolean verificarCamposZero() {
+    boolean temZero = false;
+    if (txtInputParameter1.isVisible()) {
+      try {
+        temZero |= Double.parseDouble(txtInputParameter1.getText().trim()) == 0.0;
+      } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(null, "Algo diferente de números "
+            + "digitado em algum dos parâmetros.");
+
       }
     }
-    
+    if (txtInputParameter2.isVisible()) {
+      try {
+        temZero |= Double.parseDouble(txtInputParameter2.getText().trim()) == 0.0;
+      } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(null, "Algo diferente de números "
+            + "digitado em algum dos parâmetros.");
+      }
+
+    }
+    if (txtInputParameter3.isVisible()) {
+      try {
+        temZero |= Double.parseDouble(txtInputParameter3.getText().trim()) == 0.0;
+      } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(null, "Algo diferente de números "
+            + "digitado em algum dos parâmetros.");
+      }
+    }
+    return temZero;
   }
 
   private void esconderComponentes() {
@@ -246,6 +281,7 @@ public class CreationFrame extends javax.swing.JFrame {
   }//GEN-LAST:event_btnTriActionPerformed
 
   private void cbFormSelectorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFormSelectorActionPerformed
+
     int formaIndex = (int) cbFormSelector.getSelectedIndex();
     if (btnBi.isSelected()) {
       switch (formaIndex) {
@@ -305,70 +341,82 @@ public class CreationFrame extends javax.swing.JFrame {
   }//GEN-LAST:event_cbFormSelectorActionPerformed
 
   private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-String formaSelecionada = (String) cbFormSelector.getSelectedItem();
+    String formaSelecionada = (String) cbFormSelector.getSelectedItem();
     Forma forma = null;
-
-    try {
+    if (verificarCamposZero()) {
+      JOptionPane.showMessageDialog(this, "Preencha os parâmetros corretamente.");
+    } else {
+      try {
         if (btnBi.isSelected()) {
-            switch (formaSelecionada) {
-                case "circulo" -> {
-                    double raio = Double.parseDouble(txtInputParameter1.getText());
-                    forma = new Circulo(raio);
-                    
-                }
-                case "triangulo" -> {
-                    if (btn3Sides.isSelected()) {
-                        double lado1 = Double.parseDouble(txtInputParameter1.getText());
-                        double lado2 = Double.parseDouble(txtInputParameter2.getText());
-                        double lado3 = Double.parseDouble(txtInputParameter3.getText());
-                        forma = new Triangulo(lado1, lado2, lado3);
-                    } else if (btnBAndH.isSelected()) {
-                        double base = Double.parseDouble(txtInputParameter1.getText());
-                        double altura = Double.parseDouble(txtInputParameter2.getText());
-                        forma = new Triangulo(base, altura);
-                    }
-                }
-                case "quadrado" -> {
-                    double lado = Double.parseDouble(txtInputParameter1.getText());
-                    forma = new Quadrado(lado);
-                }
+          switch (formaSelecionada) {
+            case "circulo" -> {
+              double raio = Double.parseDouble(txtInputParameter1.getText());
+              forma = new Circulo(raio);
+
             }
+            case "triangulo" -> {
+              if (btn3Sides.isSelected()) {
+                double lado1 = Double.parseDouble(txtInputParameter1.getText());
+                double lado2 = Double.parseDouble(txtInputParameter2.getText());
+                double lado3 = Double.parseDouble(txtInputParameter3.getText());
+                if (lado1 + lado2 > lado3 && lado2 + lado3 > lado1 && lado1 + lado3 > lado2) {
+                  forma = new Triangulo(lado1, lado2, lado3);
+                } else {
+                  JOptionPane.showMessageDialog(null, "Lados inválidos para formar um triângulo.");
+                  forma = null;
+                }
+              } else if (btnBAndH.isSelected()) {
+                double base = Double.parseDouble(txtInputParameter1.getText());
+                double altura = Double.parseDouble(txtInputParameter2.getText());
+                forma = new Triangulo(base, altura);
+              }
+            }
+
+            case "quadrado" -> {
+              double lado = Double.parseDouble(txtInputParameter1.getText());
+              forma = new Quadrado(lado);
+            }
+          }
         } else if (btnTri.isSelected()) {
-            switch (formaSelecionada) {
-                case "cubo" -> {
-                    double lado = Double.parseDouble(txtInputParameter1.getText());
-                    forma = new Cubo(lado);
-                }
-                case "piramide" -> {
-                    double lado = Double.parseDouble(txtInputParameter1.getText());
-                    double altura = Double.parseDouble(txtInputParameter2.getText());
-                    forma = new Piramide(lado, altura);
-                }
-                case "esfera" -> {
-                    double raio = Double.parseDouble(txtInputParameter1.getText());
-                    forma = new Esfera(raio);
-                }
+          switch (formaSelecionada) {
+            case "cubo" -> {
+              double lado = Double.parseDouble(txtInputParameter1.getText());
+              forma = new Cubo(lado);
             }
+            case "piramide" -> {
+              double lado = Double.parseDouble(txtInputParameter1.getText());
+              double altura = Double.parseDouble(txtInputParameter2.getText());
+              forma = new Piramide(lado, altura);
+            }
+            case "esfera" -> {
+              double raio = Double.parseDouble(txtInputParameter1.getText());
+              forma = new Esfera(raio);
+            }
+          }
         }
 
         if (forma != null) {
-            forma.setNome(txtInputName.getText());
-            formList.adicionarForma(forma);
-            JOptionPane.showMessageDialog(this, "Forma adicionada com sucesso.");
-            mainFrame.atualizarBx();  
-            dispose();
+          forma.setNome(txtInputName.getText());
+          formList.adicionarForma(forma);
+          JOptionPane.showMessageDialog(this, "Forma adicionada com sucesso.");
+          mainFrame.atualizarBx();
+          dispose();
         } else {
-            JOptionPane.showMessageDialog(this, "Selecione uma forma válida.");
+          JOptionPane.showMessageDialog(this, "Selecione uma forma válida.");
         }
-    } catch (NumberFormatException e) {
+      } catch (NumberFormatException e) {
         JOptionPane.showMessageDialog(this, "Preencha os parâmetros corretamente.");
+      }
     }
-    
-    
+
   }//GEN-LAST:event_btnAddActionPerformed
 
   private void btnBAndHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBAndHActionPerformed
-    esconderParametros();
+    lblTxtName.setVisible(false);
+    txtInputName.setVisible(false);
+    txtInputParameter3.setText("");
+    txtInputParameter3.setVisible(false);
+    btnAdd.setVisible(false);
     btn3Sides.setVisible(true);
     btnBAndH.setVisible(true);
     lblTxtParameter1.setText("base:");
@@ -396,11 +444,11 @@ String formaSelecionada = (String) cbFormSelector.getSelectedItem();
   }//GEN-LAST:event_txtInputParameter1ActionPerformed
 
   private void txtInputParameter2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtInputParameter2ActionPerformed
-    verificarCampos();    
+    verificarCampos();
   }//GEN-LAST:event_txtInputParameter2ActionPerformed
 
   private void txtInputParameter3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtInputParameter3ActionPerformed
-    verificarCampos();    
+    verificarCampos();
   }//GEN-LAST:event_txtInputParameter3ActionPerformed
 
   private void txtInputNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtInputNameActionPerformed
