@@ -2,35 +2,39 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package br.com.ifba.atividade11.forma.bidimensional.formas;
+package br.com.ifba.atividade11.forma.tridimensional.formas;
 
-import br.com.ifba.atividade11.forma.bidimensional.Bidimensional;
+import br.com.ifba.atividade11.forma.tridimensional.Tridimensional;
 
 /**
  *
  * @author gerviz
  */
-public class Circulo extends Bidimensional {
-
+public class Esfera extends Tridimensional{
+  
   private double raio;
 
-  public Circulo() {
-  }
-
-  public Circulo(double raio) {
+  public Esfera(double raio) {
     this.raio = raio;
+  }
+  
+  
+  @Override
+  public double obterVolume() {
+    return (4.0 / 3.0) * Math.PI * raio * raio * raio;
   }
 
   @Override
   public double obterArea() {
-    return raio * raio * Math.PI;
+    return 4 * Math.PI * raio * raio;
   }
 
   @Override
   public String toString() {
-    String parametros;
-    parametros = "tipo: circulo"
+      String parametros;
+    parametros = "tipo: esfera"
         + "\nraio: " + getRaio()
+        + "\nvolume: " + obterVolume()
         + "\narea: " + obterArea();
     return parametros;
   }
@@ -42,5 +46,5 @@ public class Circulo extends Bidimensional {
   public void setRaio(double raio) {
     this.raio = raio;
   }
-
+  
 }

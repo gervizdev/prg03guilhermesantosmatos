@@ -4,17 +4,29 @@
  */
 package br.com.ifba.atividade11.view;
 
+import br.com.ifba.atividade11.forma.FormList;
+import br.com.ifba.atividade11.forma.Forma;
+
 /**
  *
  * @author gerviz
  */
 public class MainFrame extends javax.swing.JFrame {
-
+  private FormList formList;
   /**
    * Creates new form MainFrame
    */
   public MainFrame() {
+    this.formList = new FormList();
     initComponents();
+  }
+  
+
+  public void atualizarBx() {
+    cbFormas.removeAllItems();
+    for (Forma f : formList.getFormas()) {
+      cbFormas.addItem(f.getNome());
+    }
   }
 
   /**
@@ -26,21 +38,82 @@ public class MainFrame extends javax.swing.JFrame {
   // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
   private void initComponents() {
 
+    cbFormas = new javax.swing.JComboBox<>();
+    btnAddForm = new javax.swing.JToggleButton();
+    lblTxtNameSelect = new javax.swing.JLabel();
+    jScrollPane1 = new javax.swing.JScrollPane();
+    txtParameters = new javax.swing.JTextArea();
+
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+    setResizable(false);
+
+    cbFormas.setMaximumSize(new java.awt.Dimension(25, 32767));
+    cbFormas.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        cbFormasActionPerformed(evt);
+      }
+    });
+
+    btnAddForm.setText("Adicionar forma");
+    btnAddForm.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btnAddFormActionPerformed(evt);
+      }
+    });
+
+    lblTxtNameSelect.setText("selecione o nome da forma:");
+
+    txtParameters.setEditable(false);
+    txtParameters.setColumns(20);
+    txtParameters.setRows(5);
+    jScrollPane1.setViewportView(txtParameters);
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 400, Short.MAX_VALUE)
+      .addGroup(layout.createSequentialGroup()
+        .addGap(27, 27, 27)
+        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addGroup(layout.createSequentialGroup()
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+            .addComponent(btnAddForm))
+          .addGroup(layout.createSequentialGroup()
+            .addComponent(lblTxtNameSelect)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(cbFormas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(0, 0, Short.MAX_VALUE)))
+        .addContainerGap())
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 300, Short.MAX_VALUE)
+      .addGroup(layout.createSequentialGroup()
+        .addContainerGap()
+        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+          .addComponent(cbFormas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(lblTxtNameSelect))
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addGroup(layout.createSequentialGroup()
+            .addGap(0, 0, Short.MAX_VALUE)
+            .addComponent(btnAddForm))
+          .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE))
+        .addGap(22, 22, 22))
     );
 
     pack();
   }// </editor-fold>//GEN-END:initComponents
+
+  private void btnAddFormActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddFormActionPerformed
+    atualizarBx();
+    CreationFrame frame = new CreationFrame(this, formList);
+    frame.setVisible(true);
+  }//GEN-LAST:event_btnAddFormActionPerformed
+
+  private void cbFormasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFormasActionPerformed
+
+  }//GEN-LAST:event_cbFormasActionPerformed
 
   /**
    * @param args the command line arguments
@@ -78,5 +151,10 @@ public class MainFrame extends javax.swing.JFrame {
   }
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
+  private javax.swing.JToggleButton btnAddForm;
+  private javax.swing.JComboBox<String> cbFormas;
+  private javax.swing.JScrollPane jScrollPane1;
+  private javax.swing.JLabel lblTxtNameSelect;
+  private javax.swing.JTextArea txtParameters;
   // End of variables declaration//GEN-END:variables
 }
