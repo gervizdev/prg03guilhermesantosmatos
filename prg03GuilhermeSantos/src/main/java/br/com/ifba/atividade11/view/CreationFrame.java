@@ -33,12 +33,12 @@ public class CreationFrame extends javax.swing.JFrame {
     initComponents();
     esconderComponentes();
   }
-
+// checa se algo e um numero
   public boolean isNumber(String algo) {
     boolean isNumber = NumberUtils.isCreatable(algo);
     return isNumber;
   }
-
+//verifica se campos foram preenchidos antes de liberar alguns itens
   private void verificarCampos() {
     boolean ok = true;
     if (txtInputParameter1.isVisible()) {
@@ -62,7 +62,7 @@ public class CreationFrame extends javax.swing.JFrame {
       btnAdd.setVisible(false);
     }
   }
-
+// verifica se algum campo é zero
   private boolean verificarCamposZero() {
     boolean temZero = false;
     if (txtInputParameter1.isVisible()) {
@@ -93,7 +93,7 @@ public class CreationFrame extends javax.swing.JFrame {
     }
     return temZero;
   }
-
+// esconde quase todos os componentes
   private void esconderComponentes() {
     btn3Sides.setVisible(false);
     btnBAndH.setVisible(false);
@@ -109,7 +109,7 @@ public class CreationFrame extends javax.swing.JFrame {
     txtInputParameter3.setVisible(false);
     txtInputName.setVisible(false);
   }
-
+// esconde alguns componentes referentes aos parametros
   private void esconderParametros() {
     btn3Sides.setVisible(false);
     btnBAndH.setVisible(false);
@@ -259,6 +259,7 @@ public class CreationFrame extends javax.swing.JFrame {
   }// </editor-fold>//GEN-END:initComponents
 
   private void btnBiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBiActionPerformed
+    //retira todos os itens do combobox para adicionar somente os bi ou tridimensionais
     cbFormSelector.removeAllItems();
     cbFormSelector.addItem("circulo");
     cbFormSelector.addItem("triangulo");
@@ -270,6 +271,7 @@ public class CreationFrame extends javax.swing.JFrame {
   }//GEN-LAST:event_btnBiActionPerformed
 
   private void btnTriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTriActionPerformed
+    //retira todos os itens do combobox para adicionar somente os bi ou tridimensionais
     cbFormSelector.removeAllItems();
     cbFormSelector.addItem("cubo");
     cbFormSelector.addItem("piramide");
@@ -281,7 +283,7 @@ public class CreationFrame extends javax.swing.JFrame {
   }//GEN-LAST:event_btnTriActionPerformed
 
   private void cbFormSelectorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFormSelectorActionPerformed
-
+// pega a forma selecionada no combobox e deixa campos suficientes visiveis
     int formaIndex = (int) cbFormSelector.getSelectedIndex();
     if (btnBi.isSelected()) {
       switch (formaIndex) {
@@ -341,6 +343,7 @@ public class CreationFrame extends javax.swing.JFrame {
   }//GEN-LAST:event_cbFormSelectorActionPerformed
 
   private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+    //checa se é
     String formaSelecionada = (String) cbFormSelector.getSelectedItem();
     Forma forma = null;
     if (verificarCamposZero()) {
@@ -412,6 +415,7 @@ public class CreationFrame extends javax.swing.JFrame {
   }//GEN-LAST:event_btnAddActionPerformed
 
   private void btnBAndHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBAndHActionPerformed
+    //esconde/mostra componentes referentes ao tipo do botao(base/altura)
     lblTxtName.setVisible(false);
     txtInputName.setVisible(false);
     txtInputParameter3.setText("");
@@ -428,6 +432,7 @@ public class CreationFrame extends javax.swing.JFrame {
   }//GEN-LAST:event_btnBAndHActionPerformed
 
   private void btn3SidesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn3SidesActionPerformed
+    //esconde/mostra componentes referentes ao tipo do botao(3 lados)
     lblTxtParameter1.setText("Lado 1:");
     lblTxtParameter1.setVisible(true);
     txtInputParameter1.setVisible(true);

@@ -22,9 +22,10 @@ public class MainFrame extends javax.swing.JFrame {
    * Creates new form MainFrame
    */
   public MainFrame() {
+    //cria uma lista de formas
     this.formList = new FormList();
     initComponents();
-
+// muda o rendererer do combobox para mostrar somente o nome
     cbFormas.setRenderer(new DefaultListCellRenderer() {
       @Override
       public Component getListCellRendererComponent(JList<?> list, Object value,
@@ -40,7 +41,7 @@ public class MainFrame extends javax.swing.JFrame {
     });
 
   }
-
+// atualiza o combobox com os itens salvos em formas
   public void atualizarBx() {
     cbFormas.removeAllItems();
     for (Forma f : formList.getFormas()) {
@@ -65,6 +66,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
     setResizable(false);
+    getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
     cbFormas.setMaximumSize(new java.awt.Dimension(25, 32767));
     cbFormas.addActionListener(new java.awt.event.ActionListener() {
@@ -72,6 +74,7 @@ public class MainFrame extends javax.swing.JFrame {
         cbFormasActionPerformed(evt);
       }
     });
+    getContentPane().add(cbFormas, new org.netbeans.lib.awtextra.AbsoluteConstraints(184, 12, -1, -1));
 
     btnAddForm.setText("Adicionar forma");
     btnAddForm.addActionListener(new java.awt.event.ActionListener() {
@@ -79,58 +82,30 @@ public class MainFrame extends javax.swing.JFrame {
         btnAddFormActionPerformed(evt);
       }
     });
+    getContentPane().add(btnAddForm, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 252, -1, -1));
 
     lblTxtNameSelect.setText("selecione o nome da forma:");
+    getContentPane().add(lblTxtNameSelect, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 16, -1, -1));
 
     txtParameters.setEditable(false);
     txtParameters.setColumns(20);
     txtParameters.setRows(5);
     jScrollPane1.setViewportView(txtParameters);
 
-    javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-    getContentPane().setLayout(layout);
-    layout.setHorizontalGroup(
-      layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(layout.createSequentialGroup()
-        .addGap(27, 27, 27)
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addGroup(layout.createSequentialGroup()
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
-            .addComponent(btnAddForm))
-          .addGroup(layout.createSequentialGroup()
-            .addComponent(lblTxtNameSelect)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(cbFormas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(0, 0, Short.MAX_VALUE)))
-        .addContainerGap())
-    );
-    layout.setVerticalGroup(
-      layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(layout.createSequentialGroup()
-        .addContainerGap()
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(cbFormas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addComponent(lblTxtNameSelect))
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addGroup(layout.createSequentialGroup()
-            .addGap(0, 0, Short.MAX_VALUE)
-            .addComponent(btnAddForm))
-          .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE))
-        .addGap(22, 22, 22))
-    );
+    getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 49, -1, 229));
 
     pack();
   }// </editor-fold>//GEN-END:initComponents
 
   private void btnAddFormActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddFormActionPerformed
     atualizarBx();
+    //chama a tela secundaria
     CreationFrame frame = new CreationFrame(this, formList);
     frame.setVisible(true);
   }//GEN-LAST:event_btnAddFormActionPerformed
 
   private void cbFormasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFormasActionPerformed
+    //busca a forma e os dados dela e escreve em um jTextArea
     Forma selecionada = (Forma) cbFormas.getSelectedItem();
     if (selecionada != null) {
       txtParameters.setText(selecionada.toString());
