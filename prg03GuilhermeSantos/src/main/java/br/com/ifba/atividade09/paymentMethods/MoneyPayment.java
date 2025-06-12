@@ -7,20 +7,21 @@ package br.com.ifba.atividade09.paymentMethods;
 import br.com.ifba.atividade09.interfaces.paymentInterface;
 import javax.swing.JOptionPane;
 
-
 /**
  *
  * @author gerviz
  */
 //calcula, cria e imprime o recibo referente ao metodo de pagamento
 public class MoneyPayment implements paymentInterface {
-     private double valor;
-    public double calcularTotal(double valor){
-        double desconto = valor * 0.10;
-        return valor - desconto;
-         }
-    
-    public void imprimirRecibo(String nome, String data, double valor, double valorFinal) {
+
+  private double valor;
+
+  public double calcularTotal(double valor) {
+    double desconto = valor * 0.10;
+    return valor - desconto;
+  }
+
+  public void imprimirRecibo(String nome, String data, double valor, double valorFinal) {
     String recibo = """
         ===== Recibo de Pagamento (Dinheiro) =====
         Cliente: %s
@@ -32,6 +33,6 @@ public class MoneyPayment implements paymentInterface {
         """.formatted(nome, data, valor, valorFinal);
 
     JOptionPane.showMessageDialog(null, recibo, "Recibo", JOptionPane.INFORMATION_MESSAGE);
-}
-    
+  }
+
 }

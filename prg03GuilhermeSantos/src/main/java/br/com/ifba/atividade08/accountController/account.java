@@ -86,6 +86,6 @@ public class account {
   }
 
   public void draw(double valor) {
-    this.saldo  -= valor;
+    this.saldo -= valor;
   }
 }

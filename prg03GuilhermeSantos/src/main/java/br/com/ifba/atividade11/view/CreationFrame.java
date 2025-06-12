@@ -34,11 +34,13 @@ public class CreationFrame extends javax.swing.JFrame {
     esconderComponentes();
   }
 // checa se algo e um numero
+
   public boolean isNumber(String algo) {
     boolean isNumber = NumberUtils.isCreatable(algo);
     return isNumber;
   }
 //verifica se campos foram preenchidos antes de liberar alguns itens
+
   private void verificarCampos() {
     boolean ok = true;
     if (txtInputParameter1.isVisible()) {
@@ -63,6 +65,7 @@ public class CreationFrame extends javax.swing.JFrame {
     }
   }
 // verifica se algum campo é zero
+
   private boolean verificarCamposZero() {
     boolean temZero = false;
     if (txtInputParameter1.isVisible()) {
@@ -94,6 +97,7 @@ public class CreationFrame extends javax.swing.JFrame {
     return temZero;
   }
 // esconde quase todos os componentes
+
   private void esconderComponentes() {
     btn3Sides.setVisible(false);
     btnBAndH.setVisible(false);
@@ -110,6 +114,7 @@ public class CreationFrame extends javax.swing.JFrame {
     txtInputName.setVisible(false);
   }
 // esconde alguns componentes referentes aos parametros
+
   private void esconderParametros() {
     btn3Sides.setVisible(false);
     btnBAndH.setVisible(false);
@@ -463,7 +468,6 @@ public class CreationFrame extends javax.swing.JFrame {
   /**
    * @param args the command line arguments
    */
-
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JRadioButton btn3Sides;
   private javax.swing.JToggleButton btnAdd;

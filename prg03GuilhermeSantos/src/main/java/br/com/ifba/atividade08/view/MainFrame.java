@@ -24,28 +24,30 @@ public class MainFrame extends javax.swing.JFrame {
     initComponents();
 
   }
+
   // atualiza a tela
-  public void atualizarTela(){
+  public void atualizarTela() {
     Object selected = bxOwner.getSelectedItem();
     if (selected != null) {
-    String owner = bxOwner.getSelectedItem().toString();
-    for (account conta : BankController.contas) {
-      if (conta.getDono().equals(owner)) {
-        lblAccountType.setText("tipo de conta:" + conta.getTipo());
-        lblSaldo.setText("Saldo: " + conta.getSaldo());
-        lblAccountNum.setText("Numero da conta: " + conta.getNumConta());
-        if (conta.getTipo().equals("Corrente")) {
-          lblMensalidade.setText("Mensalidade: 12.00");
-        } else {
-          lblMensalidade.setText("Mensalidade: 20.00");
+      String owner = bxOwner.getSelectedItem().toString();
+      for (account conta : BankController.contas) {
+        if (conta.getDono().equals(owner)) {
+          lblAccountType.setText("tipo de conta:" + conta.getTipo());
+          lblSaldo.setText("Saldo: " + conta.getSaldo());
+          lblAccountNum.setText("Numero da conta: " + conta.getNumConta());
+          if (conta.getTipo().equals("Corrente")) {
+            lblMensalidade.setText("Mensalidade: 12.00");
+          } else {
+            lblMensalidade.setText("Mensalidade: 20.00");
+          }
+          break;
         }
-        break;
       }
-    }
-    }else{
-    System.out.println("Nada selecionado no combo.");
+    } else {
+      System.out.println("Nada selecionado no combo.");
     }
   }
+
   /**
    * This method is called from within the constructor to initialize the form.
    * WARNING: Do NOT modify this code. The content of this method is always
@@ -174,7 +176,7 @@ public class MainFrame extends javax.swing.JFrame {
           JOptionPane.ERROR_MESSAGE
       );
     }
-    
+
   }//GEN-LAST:event_btnOpenAccountActionPerformed
 
   private void formMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseDragged

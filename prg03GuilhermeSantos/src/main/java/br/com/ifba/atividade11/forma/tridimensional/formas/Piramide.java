@@ -10,14 +10,15 @@ import br.com.ifba.atividade11.forma.tridimensional.Tridimensional;
  *
  * @author gerviz
  */
-public class Piramide extends Tridimensional{
+public class Piramide extends Tridimensional {
+
   private double base, altura;
 
   public Piramide(double base, double altura) {
     this.base = base;
     this.altura = altura;
   }
-  
+
   @Override
   public double obterVolume() {
     return (base * base * altura) / 3;
@@ -25,7 +26,7 @@ public class Piramide extends Tridimensional{
 
   @Override
   public double obterArea() {
-     double arestaBase = base;
+    double arestaBase = base;
     double areaBase = arestaBase * arestaBase;
     double apotema = Math.sqrt((altura * altura) + ((arestaBase / 2) * (arestaBase / 2)));
     double areaLateral = 2 * arestaBase * apotema;
@@ -34,7 +35,7 @@ public class Piramide extends Tridimensional{
 
   @Override
   public String toString() {
-      String parametros;
+    String parametros;
     parametros = "tipo: piramide"
         + "\ndimensao: tridimensional"
         + "\nbase: " + getBase()
@@ -59,5 +60,5 @@ public class Piramide extends Tridimensional{
   public void setAltura(double altura) {
     this.altura = altura;
   }
-  
+
 }

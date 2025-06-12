@@ -8,19 +8,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FormList {
-    private List<Forma> formas;
 
-    public FormList() {
-        formas = new ArrayList<>();
-    }
+  private List<Forma> formas;
 
-    public void adicionarForma(Forma forma) {
-        formas.add(forma);
-    }
+  public FormList() {
+    formas = new ArrayList<>();
+  }
 
-    public List<Forma> getFormas() {
-        return formas;
-    }
-    
-    
+  public void adicionarForma(Forma forma) {
+    formas.add(forma);
+  }
+
+  public List<Forma> getFormas() {
+    return formas;
+  }
+
 }

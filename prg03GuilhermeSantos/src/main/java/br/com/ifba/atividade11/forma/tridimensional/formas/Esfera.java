@@ -10,15 +10,14 @@ import br.com.ifba.atividade11.forma.tridimensional.Tridimensional;
  *
  * @author gerviz
  */
-public class Esfera extends Tridimensional{
-  
+public class Esfera extends Tridimensional {
+
   private double raio;
 
   public Esfera(double raio) {
     this.raio = raio;
   }
-  
-  
+
   @Override
   public double obterVolume() {
     return (4.0 / 3.0) * Math.PI * raio * raio * raio;
@@ -31,7 +30,7 @@ public class Esfera extends Tridimensional{
 
   @Override
   public String toString() {
-      String parametros;
+    String parametros;
     parametros = "tipo: esfera"
         + "\ndimensao: tridimensional"
         + "\nraio: " + getRaio()
@@ -47,5 +46,5 @@ public class Esfera extends Tridimensional{
   public void setRaio(double raio) {
     this.raio = raio;
   }
-  
+
 }

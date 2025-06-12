@@ -9,10 +9,11 @@ package br.com.ifba.atividade11.forma;
  * @author gerviz
  */
 public abstract class Forma {
+
   protected String nome;
-  
+
   public abstract double obterArea();
-  
+
   @Override
   public abstract String toString();
 
@@ -23,5 +24,5 @@ public abstract class Forma {
   public void setNome(String nome) {
     this.nome = nome;
   }
-  
+
 }

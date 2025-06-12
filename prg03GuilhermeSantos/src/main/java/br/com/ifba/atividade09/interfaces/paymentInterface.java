@@ -8,7 +8,6 @@ package br.com.ifba.atividade09.interfaces;
  *
  * @author gerviz
  */
-
 //interface
 public interface paymentInterface {
 

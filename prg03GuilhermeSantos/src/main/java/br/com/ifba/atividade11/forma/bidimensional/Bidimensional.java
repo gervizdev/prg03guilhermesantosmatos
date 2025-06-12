@@ -11,5 +11,5 @@ import br.com.ifba.atividade11.forma.Forma;
  * @author gerviz
  */
 public abstract class Bidimensional extends Forma {
-  
+
 }

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
+             version="3.0">
+    <persistence-unit name="myDB" transaction-type="RESOURCE_LOCAL">
+        <class>com.exemplo.entidade.Usuario</class>
+
+        <properties>
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://aws-0-sa-east-1.pooler.supabase.com:6543/postgres"/>
+            <property name="jakarta.persistence.jdbc.user" value="postgres.cfndtjdnnfstramgbomt"/>
+            <property name="jakarta.persistence.jdbc.password" value="ZiTaE4rFWyQdt3YR"/>
+            
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.show_sql" value="true"/>
+        </properties>
+    </persistence-unit>
+</persistence>

@@ -18,8 +18,8 @@ public class BankController {
   public static void adicionarConta(account c) {
     contas.add(c);
   }
-  
-  public static void removerConta(account c){
-  contas.remove(c);
+
+  public static void removerConta(account c) {
+    contas.remove(c);
   }
 }

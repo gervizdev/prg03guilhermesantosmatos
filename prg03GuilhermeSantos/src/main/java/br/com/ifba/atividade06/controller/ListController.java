@@ -12,21 +12,24 @@ import java.util.List;
  *
  * @author gerviz
  */
-
 // controla a lista
 public class ListController {
 // cria a lista com 10 elementos, todos o numero 0
-    private final List<Integer> lista = new ArrayList<>(Collections.nCopies(10, 0));
+
+  private final List<Integer> lista = new ArrayList<>(Collections.nCopies(10, 0));
 // atualiza o valor baseado no index
-    public void atualizar(int index, int valor) {
-        lista.set(index, valor);
-    }
+
+  public void atualizar(int index, int valor) {
+    lista.set(index, valor);
+  }
 // oredena em ordem crescente
-    public void ordenar() {
-        Collections.sort(lista);
-    }
+
+  public void ordenar() {
+    Collections.sort(lista);
+  }
 // retorna a lista para o MainFrame atualiza-la na tela
-    public List<Integer> getLista() {
-        return new ArrayList<>(lista);
-    }
+
+  public List<Integer> getLista() {
+    return new ArrayList<>(lista);
+  }
 }

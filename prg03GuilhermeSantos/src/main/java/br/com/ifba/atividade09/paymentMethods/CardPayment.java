@@ -11,17 +11,18 @@ import javax.swing.JOptionPane;
  *
  * @author gerviz
  */
-
 //calcula, cria e imprime o recibo referente ao metodo de pagamento
 public class CardPayment implements paymentInterface {
-    private double valor;
-    public double calcularTotal(double valor){
-        double taxa = valor * 0.05;
-        return valor + taxa;
-         }
-    
-    public void imprimirRecibo(String nome,String data,double valor,double valorFinal){
-      String recibo = """
+
+  private double valor;
+
+  public double calcularTotal(double valor) {
+    double taxa = valor * 0.05;
+    return valor + taxa;
+  }
+
+  public void imprimirRecibo(String nome, String data, double valor, double valorFinal) {
+    String recibo = """
         ===== Recibo de Pagamento (Cartão) =====
         Cliente: %s
         Data: %s
@@ -32,6 +33,6 @@ public class CardPayment implements paymentInterface {
         """.formatted(nome, data, valor, valorFinal);
 
     JOptionPane.showMessageDialog(null, recibo, "Recibo", JOptionPane.INFORMATION_MESSAGE);
-    }
-    
+  }
+
 }

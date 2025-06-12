@@ -42,6 +42,7 @@ public class MainFrame extends javax.swing.JFrame {
 
   }
 // atualiza o combobox com os itens salvos em formas
+
   public void atualizarBx() {
     cbFormas.removeAllItems();
     for (Forma f : formList.getFormas()) {

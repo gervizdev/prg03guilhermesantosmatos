@@ -19,6 +19,7 @@ import javax.swing.JOptionPane;
  */
 public class CursoListar extends javax.swing.JFrame {
 
+  AddOrEditCurso addCurso = new AddOrEditCurso(this, true, false, null);
   public TableCursoModel tableModel;
   private List<Curso> allCursos;
 
@@ -27,17 +28,8 @@ public class CursoListar extends javax.swing.JFrame {
    */
   public CursoListar() {
 
-    List<Curso> dadosIniciais = new ArrayList<>();
-    // Dados de exemplo:
-    dadosIniciais.add(new Curso("Melancia", 20, "Fruta", "Empresa A"));
-    dadosIniciais.add(new Curso("Maçã", 80, "Fruta", "Empresa C"));
-    dadosIniciais.add(new Curso("Banana", 100, "Fruta", "Empresa A"));
-    dadosIniciais.add(new Curso("Laranja", 60, "Fruta", "Empresa D"));
-    dadosIniciais.add(new Curso("Tangerina", 30, "Fruta", "Empresa C"));
-    dadosIniciais.add(new Curso("Amora", 40, "Fruta", "Empresa A"));
-
-    this.allCursos = new ArrayList<>(dadosIniciais);
-    tableModel = new TableCursoModel(dadosIniciais);
+    this.allCursos = new ArrayList<>();
+    tableModel = new TableCursoModel();
 
     initComponents();
     tblCursos.setModel(tableModel);
@@ -85,9 +77,8 @@ public class CursoListar extends javax.swing.JFrame {
   // Método para editar um curso da tabela
   public void editarCursoDaTabela(int rowIndex) {
     Curso cursoParaEditar = tableModel.getCursoAt(rowIndex);
-    JOptionPane.showMessageDialog(this, "Abrir tela de edição para o curso: " + cursoParaEditar.getNome());
-    // >>> AQUI VOCÊ CHAMARIA SUA TELA DE EDIÇÃO, PASSANDO O OBJETO 'cursoParaEditar' <<<
-    // Ex: new EdicaoCursoFrame(cursoParaEditar).setVisible(true);
+    AddOrEditCurso editCurso = new AddOrEditCurso(this, true, true, cursoParaEditar);
+    editCurso.setVisible(true);
   }
 
   private void realizaBusca(String termoBusca) {
@@ -100,11 +91,15 @@ public class CursoListar extends javax.swing.JFrame {
     } else {
       // Filtra a lista de cursos original
       for (Curso curso : allCursos) {
-        // Verifica se o termo de busca está no nome, descrição ou fornecedor
-        if (curso.getNome().toLowerCase().contains(termoLowerCase)
-            || curso.getDescricao().toLowerCase().contains(termoLowerCase)
-            || curso.getFornecedor().toLowerCase().contains(termoLowerCase)) {
-          resultados.add(curso);
+        // Verifica se o termo de busca está no nome, codigo ou id
+        try {
+          if (curso.getNome().toLowerCase().contains(termoLowerCase)
+              || curso.getCodigoCurso().toLowerCase().contains(termoLowerCase)
+              || curso.getId() == Integer.parseInt(termoBusca)) {
+            resultados.add(curso);
+          }
+        } catch (NumberFormatException e) {
+          //so pra n retornar erroó
         }
       }
     }
@@ -124,8 +119,8 @@ public class CursoListar extends javax.swing.JFrame {
     jScrollPane1 = new javax.swing.JScrollPane();
     tblCursos = new javax.swing.JTable();
     txtSearch = new javax.swing.JTextField();
-    jButton1 = new javax.swing.JButton();
-    jButton2 = new javax.swing.JButton();
+    btnAddCurso = new javax.swing.JButton();
+    btnHome = new javax.swing.JButton();
     lblBackground = new javax.swing.JLabel();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -169,11 +164,21 @@ public class CursoListar extends javax.swing.JFrame {
     });
     getContentPane().add(txtSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, -1, -1));
 
-    jButton1.setText("jButton1");
-    getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 20, -1, -1));
+    btnAddCurso.setText("+");
+    btnAddCurso.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btnAddCursoActionPerformed(evt);
+      }
+    });
+    getContentPane().add(btnAddCurso, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 20, 80, -1));
 
-    jButton2.setText("jButton2");
-    getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 20, -1, -1));
+    btnHome.setText("Home");
+    btnHome.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btnHomeActionPerformed(evt);
+      }
+    });
+    getContentPane().add(btnHome, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 20, -1, -1));
 
     lblBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/ifba/atividade12/view/images/backgroung.png"))); // NOI18N
     getContentPane().add(lblBackground, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 880, -1));
@@ -184,6 +189,14 @@ public class CursoListar extends javax.swing.JFrame {
   private void txtSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchActionPerformed
     realizaBusca(txtSearch.getText());
   }//GEN-LAST:event_txtSearchActionPerformed
+
+  private void btnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeActionPerformed
+    this.dispose();
+  }//GEN-LAST:event_btnHomeActionPerformed
+
+  private void btnAddCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddCursoActionPerformed
+    addCurso.setVisible(true);
+  }//GEN-LAST:event_btnAddCursoActionPerformed
 
   /**
    * @param args the command line arguments
@@ -203,16 +216,14 @@ public class CursoListar extends javax.swing.JFrame {
     //</editor-fold>
 
     /* Create and display the form */
-    java.awt.EventQueue.invokeLater(new Runnable() {
-      public void run() {
-        new CursoListar().setVisible(true);
-      }
+    java.awt.EventQueue.invokeLater(() -> {
+      new CursoListar().setVisible(true);
     });
   }
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
-  private javax.swing.JButton jButton1;
-  private javax.swing.JButton jButton2;
+  private javax.swing.JButton btnAddCurso;
+  private javax.swing.JButton btnHome;
   private javax.swing.JScrollPane jScrollPane1;
   private javax.swing.JLabel lblBackground;
   private javax.swing.JTable tblCursos;

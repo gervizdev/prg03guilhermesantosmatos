@@ -5,27 +5,46 @@
 package br.com.ifba.atividade12.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Table;
+import jakarta.persistence.Column;
 
 /**
  *
  * @author gerviz
  */
 @Entity
+@Table(name = "cursos")
 public class Curso {
 
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private long id;
+
+  @Column(name = "nome", nullable = false)
   private String nome;
-  private int quantidade;
-  private String descricao;
-  private String fornecedor;
+  @Column(name = "codigo_curso", nullable = false, unique = true, length = 255)
+  private String codigoCurso;
+  private boolean ativo;
 
   public Curso() {
   }
 
-  public Curso(String nome, int quantidade, String descricao, String fornecedor) {
+  public Curso(long id, String nome, String codigoCurso, boolean ativo) {
+    this.id = id;
     this.nome = nome;
-    this.quantidade = quantidade;
-    this.descricao = descricao;
-    this.fornecedor = fornecedor;
+    this.codigoCurso = codigoCurso;
+    this.ativo = ativo;
+  }
+
+  public long getId() {
+    return id;
+  }
+
+  public void setId(long id) {
+    this.id = id;
   }
 
   public String getNome() {
@@ -36,30 +55,20 @@ public class Curso {
     this.nome = nome;
   }
 
-  public int getQuantidade() {
-    return quantidade;
+  public String getCodigoCurso() {
+    return codigoCurso;
   }
 
-  public void setQuantidade(int quantidade) {
-    this.quantidade = quantidade;
+  public void setCodigoCurso(String codigoCurso) {
+    this.codigoCurso = codigoCurso;
   }
 
-  public String getDescricao() {
-    return descricao;
+  public boolean isAtivo() {
+    return ativo;
   }
 
-  public void setDescricao(String descricao) {
-    this.descricao = descricao;
+  public void setAtivo(boolean ativo) {
+    this.ativo = ativo;
   }
-
-  public String getFornecedor() {
-    return fornecedor;
-  }
-
-  public void setFornecedor(String fornecedor) {
-    this.fornecedor = fornecedor;
-  }
-  
-  
 
 }

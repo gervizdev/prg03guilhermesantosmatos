@@ -9,46 +9,47 @@ package br.com.ifba.atividade10.classes;
  * @author jotin
  */
 public class Sessao {
-    private Long id;
-    private Usuario usuario;
-    private String token;
 
-    public Sessao(Long id, Usuario usuario, String token) {
-        this.id = id;
-        this.usuario = usuario;
-        this.token = token;
-    }
+  private Long id;
+  private Usuario usuario;
+  private String token;
 
-    public Long getId() {
-        return id;
-    }
+  public Sessao(Long id, Usuario usuario, String token) {
+    this.id = id;
+    this.usuario = usuario;
+    this.token = token;
+  }
 
-    public Usuario getUsuario() {
-        return usuario;
-    }
+  public Long getId() {
+    return id;
+  }
 
-    public String getToken() {
-        return token;
-    }
+  public Usuario getUsuario() {
+    return usuario;
+  }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+  public String getToken() {
+    return token;
+  }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
+  public void setId(Long id) {
+    this.id = id;
+  }
 
-    public void setToken(String token) {
-        this.token = token;
-    }
-    
-    @Override
-public String toString() {
-    return "Sessao{" +
-           "id=" + id +
-           ", usuario=" + usuario +
-           ", token='" + token + '\'' +
-           '}';
-}
+  public void setUsuario(Usuario usuario) {
+    this.usuario = usuario;
+  }
+
+  public void setToken(String token) {
+    this.token = token;
+  }
+
+  @Override
+  public String toString() {
+    return "Sessao{"
+        + "id=" + id
+        + ", usuario=" + usuario
+        + ", token='" + token + '\''
+        + '}';
+  }
 }

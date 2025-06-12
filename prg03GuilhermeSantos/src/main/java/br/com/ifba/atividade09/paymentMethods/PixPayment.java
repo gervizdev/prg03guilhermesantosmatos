@@ -4,7 +4,6 @@
  */
 package br.com.ifba.atividade09.paymentMethods;
 
-
 import br.com.ifba.atividade09.interfaces.paymentInterface;
 import javax.swing.JOptionPane;
 
@@ -14,14 +13,16 @@ import javax.swing.JOptionPane;
  */
 //calcula, cria e imprime o recibo referente ao metodo de pagamento
 public class PixPayment implements paymentInterface {
-     private double valor;
-    public double calcularTotal(double valor){
-        double cashback = valor * 0.02;
-        return valor - cashback;
-         }
-    
-     public void imprimirRecibo(String nome, String data, double valor, double valorFinal) {
-        String recibo = """
+
+  private double valor;
+
+  public double calcularTotal(double valor) {
+    double cashback = valor * 0.02;
+    return valor - cashback;
+  }
+
+  public void imprimirRecibo(String nome, String data, double valor, double valorFinal) {
+    String recibo = """
             ===== Recibo de Pagamento (Pix) =====
             Cliente: %s
             Data da Compra: %s
@@ -31,8 +32,6 @@ public class PixPayment implements paymentInterface {
             =====================================
             """.formatted(nome, data, valor, valorFinal);
 
-        JOptionPane.showMessageDialog(null, recibo, "Recibo", JOptionPane.INFORMATION_MESSAGE);
-    }
-    }
-    
-
+    JOptionPane.showMessageDialog(null, recibo, "Recibo", JOptionPane.INFORMATION_MESSAGE);
+  }
+}
