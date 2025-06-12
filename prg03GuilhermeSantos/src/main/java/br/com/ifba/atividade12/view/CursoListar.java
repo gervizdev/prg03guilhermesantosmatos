@@ -6,8 +6,7 @@ package br.com.ifba.atividade12.view;
 
 import br.com.ifba.atividade12.model.TableCursoModel;
 import br.com.ifba.atividade12.entity.Curso;
-import br.com.ifba.atividade12.util.ButtonEditor;
-import br.com.ifba.atividade12.util.ButtonRenderer;
+import br.com.ifba.atividade12.util.*;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,17 +18,19 @@ import javax.swing.JOptionPane;
  */
 public class CursoListar extends javax.swing.JFrame {
 
+  CursoSave manager = new CursoSave();
   AddOrEditCurso addCurso = new AddOrEditCurso(this, true, false, null);
   public TableCursoModel tableModel;
-  private List<Curso> allCursos;
+  private final ArrayList<Curso> allCursos;
+  
   
   /**
    * Creates new form MainFrame
    */
   public CursoListar() {
 
-    this.allCursos = new ArrayList<>();
-    tableModel = new TableCursoModel();
+    this.allCursos = new ArrayList<>(manager.getAllCursos());
+    tableModel = new TableCursoModel(manager.getAllCursos());
 
     initComponents();
     tblCursos.setModel(tableModel);

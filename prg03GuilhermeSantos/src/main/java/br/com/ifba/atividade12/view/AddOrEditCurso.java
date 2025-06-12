@@ -5,6 +5,7 @@
 package br.com.ifba.atividade12.view;
 
 import br.com.ifba.atividade12.entity.Curso;
+import br.com.ifba.atividade12.util.CursoSave;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
@@ -14,17 +15,25 @@ import javax.swing.SwingUtilities;
  */
 public class AddOrEditCurso extends javax.swing.JDialog {
 
+  CursoSave manager = new CursoSave();
+  boolean editando = false;
+  Curso cursoOriginal = new Curso();
+
   /**
    * Creates new form AddCurso
    */
   public AddOrEditCurso(java.awt.Frame parent, boolean modal, boolean edit, Curso curso) {
     super(parent, modal);
     initComponents();
-    if (edit){
-    txtInName.setText(curso.getNome());
-    txtInCod.setText(curso.getCodigoCurso());
-    chkInActive.setSelected(curso.isAtivo());
-    btnAdd.setText("Editar");
+
+    if (edit) {
+      txtInName.setText(curso.getNome());
+      txtInCod.setText(curso.getCodigoCurso());
+      chkInActive.setSelected(curso.isAtivo());
+      btnAdd.setText("Editar");
+      lblId.setText("" + curso.getId());
+      editando = true;
+      cursoOriginal = curso;
     }
   }
 
@@ -45,6 +54,7 @@ public class AddOrEditCurso extends javax.swing.JDialog {
     txtInName = new javax.swing.JTextField();
     btnCancel = new javax.swing.JButton();
     btnAdd = new javax.swing.JButton();
+    lblId = new javax.swing.JLabel();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     setTitle("Preencha os dados do curso");
@@ -101,6 +111,7 @@ public class AddOrEditCurso extends javax.swing.JDialog {
       }
     });
     getContentPane().add(btnAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 140, -1, -1));
+    getContentPane().add(lblId, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 80, -1, -1));
 
     pack();
   }// </editor-fold>//GEN-END:initComponents
@@ -121,16 +132,29 @@ public class AddOrEditCurso extends javax.swing.JDialog {
   }//GEN-LAST:event_btnCancelActionPerformed
 
   private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-  if (txtInName.getText().isBlank() || txtInCod.getText().isBlank()){
-  JOptionPane.showMessageDialog(
-    null,
-    "Preencha todos os campos! Há algo em branco.",
-    "Erro",
-    JOptionPane.ERROR_MESSAGE
-);
-  }else {
-  //todo
-  }
+    if (txtInName.getText().isBlank() || txtInCod.getText().isBlank()) {
+      JOptionPane.showMessageDialog(
+          null,
+          "Preencha todos os campos! Há algo em branco.",
+          "Erro",
+          JOptionPane.ERROR_MESSAGE
+      );
+    } else {
+      if (editando) {
+        Curso curso = null;
+        curso.setNome(txtInName.getText());
+        curso.setCodigoCurso(txtInCod.getText());
+        curso.setAtivo(chkInActive.isSelected());
+        curso.setId(cursoOriginal.getId());
+        manager.saveCurso(curso);
+      } else {
+        Curso curso = null;
+        curso.setNome(txtInName.getText());
+        curso.setCodigoCurso(txtInCod.getText());
+        curso.setAtivo(chkInActive.isSelected());
+        manager.saveCurso(curso);
+      }
+    }
   }//GEN-LAST:event_btnAddActionPerformed
 
   /**
@@ -169,6 +193,7 @@ public class AddOrEditCurso extends javax.swing.JDialog {
   private javax.swing.JButton btnAdd;
   private javax.swing.JButton btnCancel;
   private javax.swing.JCheckBox chkInActive;
+  private javax.swing.JLabel lblId;
   private javax.swing.JLabel lblTxtActive;
   private javax.swing.JLabel lblTxtCod;
   private javax.swing.JLabel lblTxtName;
