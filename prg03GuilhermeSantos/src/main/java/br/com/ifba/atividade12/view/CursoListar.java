@@ -22,7 +22,7 @@ public class CursoListar extends javax.swing.JFrame {
   AddOrEditCurso addCurso = new AddOrEditCurso(this, true, false, null);
   public TableCursoModel tableModel;
   private List<Curso> allCursos;
-
+  
   /**
    * Creates new form MainFrame
    */
@@ -35,7 +35,7 @@ public class CursoListar extends javax.swing.JFrame {
     tblCursos.setModel(tableModel);
 
     // Configura o Renderizador e Editor para as colunas de "Remover" e "Editar"
-    // Coluna "REMOVER" (índice 4, se você tiver 6 colunas)
+    // Coluna "REMOVER" (índice 4)
     tblCursos.getColumnModel().getColumn(4).setCellRenderer(new ButtonRenderer());
     // Passa 'this' (a própria CursoListar) para o ButtonEditor poder chamar os métodos
     tblCursos.getColumnModel().getColumn(4).setCellEditor(new ButtonEditor(new javax.swing.JCheckBox(), this));
