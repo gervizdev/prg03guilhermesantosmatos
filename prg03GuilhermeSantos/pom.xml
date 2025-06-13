@@ -7,9 +7,10 @@
     <packaging>jar</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
-        <exec.mainClass>br.ifba.com.prg03guilhermesantos.Prg03GuilhermeSantos</exec.mainClass>
+        <exec.mainClass>br.com.ifba.atividade12.view.CursoListar</exec.mainClass>
     </properties>
     <name>prg03GuilhermeSantos</name>
     <dependencies>
@@ -42,11 +43,6 @@
             <version>3.12.0</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>3.12.0</version>
-        </dependency>
-        <dependency>
             <groupId>jakarta.persistence</groupId>
             <artifactId>jakarta.persistence-api</artifactId>
             <version>3.1.0</version>
@@ -72,4 +68,26 @@
             <version>3.4</version>
         </dependency>
     </dependencies>
+    
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <mainClass>${exec.mainClass}</mainClass>
+                    <executable>${JAVA_HOME}/bin/java</executable>
+                    <arguments>
+                        <argument>-Dfile.encoding=UTF-8</argument>
+                        <argument>-Dsun.stdout.encoding=UTF-8</argument>
+                        <argument>-Dsun.stderr.encoding=UTF-8</argument>
+                        <argument>-classpath</argument>
+                        <classpath/>
+                        <argument>${exec.mainClass}</argument>
+                    </arguments>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

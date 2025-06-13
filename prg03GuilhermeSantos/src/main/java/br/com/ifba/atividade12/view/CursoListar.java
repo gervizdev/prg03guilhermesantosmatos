@@ -21,15 +21,11 @@ public class CursoListar extends javax.swing.JFrame {
   CursoSave manager = new CursoSave();
   AddOrEditCurso addCurso = new AddOrEditCurso(this, true, false, null);
   public TableCursoModel tableModel;
-  private final ArrayList<Curso> allCursos;
-  
-  
+
   /**
    * Creates new form MainFrame
    */
   public CursoListar() {
-
-    this.allCursos = new ArrayList<>(manager.getAllCursos());
     tableModel = new TableCursoModel(manager.getAllCursos());
 
     initComponents();
@@ -65,14 +61,40 @@ public class CursoListar extends javax.swing.JFrame {
         }
       }
     });
-
   }
 
   public void removerCursoDaTabela(int rowIndex) {
-    // Pega o nome do curso antes de remover (para a mensagem de confirmação)
-    String nomeCurso = tableModel.getCursoAt(rowIndex).getNome();
-    tableModel.removeCurso(rowIndex); // Remove o curso do TableModel
-    JOptionPane.showMessageDialog(this, "Curso '" + nomeCurso + "' removido com sucesso!");
+    Curso cursoParaRemover = tableModel.getCursoAt(rowIndex);
+
+    if (cursoParaRemover != null) {
+      String nomeCurso = cursoParaRemover.getNome();
+
+      int confirm = JOptionPane.showConfirmDialog(this,
+          "Tem certeza que deseja excluir o curso: " + nomeCurso + "?",
+          "Confirmar Exclusão",
+          JOptionPane.YES_NO_OPTION,
+          JOptionPane.WARNING_MESSAGE);
+
+      if (confirm == JOptionPane.YES_OPTION) {
+        try {
+          manager.deleteCurso(cursoParaRemover);
+
+          // sincroniza a tabela
+          tableModel.setDados(manager.getAllCursos());
+
+          JOptionPane.showMessageDialog(this, "Curso '" + nomeCurso + "' removido com sucesso!");
+
+        } catch (Exception e) {
+          // Se der erro na exclusão do banco, avisa o usuário.
+          JOptionPane.showMessageDialog(this, "Erro ao remover curso: " + e.getMessage(), "Erro de Exclusão", JOptionPane.ERROR_MESSAGE);
+          e.printStackTrace();
+        }
+      }
+    } else {
+      // Se o curso na linha era nulo por algum motivo.
+      JOptionPane.showMessageDialog(this, "Erro: Curso não encontrado na linha selecionada.", "Erro", JOptionPane.ERROR_MESSAGE);
+      System.err.println("Tentativa de remover curso nulo ou inexistente na linha: " + rowIndex);
+    }
   }
 
   // Método para editar um curso da tabela
@@ -88,10 +110,10 @@ public class CursoListar extends javax.swing.JFrame {
 
     if (termoLowerCase.isEmpty()) {
       // Se o campo de busca estiver vazio, mostra todos os cursos originais
-      resultados.addAll(allCursos);
+      resultados.addAll(manager.getAllCursos());
     } else {
       // Filtra a lista de cursos original
-      for (Curso curso : allCursos) {
+      for (Curso curso : manager.getAllCursos()) {
         // Verifica se o termo de busca está no nome, codigo ou id
         try {
           if (curso.getNome().toLowerCase().contains(termoLowerCase)
@@ -100,7 +122,7 @@ public class CursoListar extends javax.swing.JFrame {
             resultados.add(curso);
           }
         } catch (NumberFormatException e) {
-          //so pra n retornar erroó
+          //so pra n retornar erro
         }
       }
     }
@@ -120,6 +142,7 @@ public class CursoListar extends javax.swing.JFrame {
     jScrollPane1 = new javax.swing.JScrollPane();
     tblCursos = new javax.swing.JTable();
     txtSearch = new javax.swing.JTextField();
+    btnRefresh = new javax.swing.JButton();
     btnAddCurso = new javax.swing.JButton();
     btnHome = new javax.swing.JButton();
     lblBackground = new javax.swing.JLabel();
@@ -148,7 +171,7 @@ public class CursoListar extends javax.swing.JFrame {
     tblCursos.getTableHeader().setResizingAllowed(false);
     tblCursos.getTableHeader().setReorderingAllowed(false);
     jScrollPane1.setViewportView(tblCursos);
-    tblCursos.getTableHeader().setReorderingAllowed(false);
+    tblCursos.getTableHeader().setResizingAllowed(true);
     tblCursos.setRowHeight(35);
     tblCursos.getTableHeader().setBackground(Color.DARK_GRAY);
 
@@ -157,13 +180,21 @@ public class CursoListar extends javax.swing.JFrame {
     jScrollPane1.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 
     txtSearch.setText("jTextField1");
-    txtSearch.setRequestFocusEnabled(false);
     txtSearch.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         txtSearchActionPerformed(evt);
       }
     });
-    getContentPane().add(txtSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, -1, -1));
+    getContentPane().add(txtSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(68, 20, 82, -1));
+
+    btnRefresh.setText("Refresh");
+    btnRefresh.setToolTipText("refresh the tabel with the Data Base data ");
+    btnRefresh.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btnRefreshActionPerformed(evt);
+      }
+    });
+    getContentPane().add(btnRefresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(369, 20, 82, -1));
 
     btnAddCurso.setText("+");
     btnAddCurso.addActionListener(new java.awt.event.ActionListener() {
@@ -171,7 +202,7 @@ public class CursoListar extends javax.swing.JFrame {
         btnAddCursoActionPerformed(evt);
       }
     });
-    getContentPane().add(btnAddCurso, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 20, 80, -1));
+    getContentPane().add(btnAddCurso, new org.netbeans.lib.awtextra.AbsoluteConstraints(218, 20, 82, -1));
 
     btnHome.setText("Home");
     btnHome.addActionListener(new java.awt.event.ActionListener() {
@@ -179,7 +210,7 @@ public class CursoListar extends javax.swing.JFrame {
         btnHomeActionPerformed(evt);
       }
     });
-    getContentPane().add(btnHome, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 20, -1, -1));
+    getContentPane().add(btnHome, new org.netbeans.lib.awtextra.AbsoluteConstraints(519, 20, 82, -1));
 
     lblBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/ifba/atividade12/view/images/backgroung.png"))); // NOI18N
     getContentPane().add(lblBackground, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 880, -1));
@@ -198,6 +229,10 @@ public class CursoListar extends javax.swing.JFrame {
   private void btnAddCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddCursoActionPerformed
     addCurso.setVisible(true);
   }//GEN-LAST:event_btnAddCursoActionPerformed
+
+  private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
+    tableModel.setDados(manager.getAllCursos());
+  }//GEN-LAST:event_btnRefreshActionPerformed
 
   /**
    * @param args the command line arguments
@@ -225,6 +260,7 @@ public class CursoListar extends javax.swing.JFrame {
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton btnAddCurso;
   private javax.swing.JButton btnHome;
+  private javax.swing.JButton btnRefresh;
   private javax.swing.JScrollPane jScrollPane1;
   private javax.swing.JLabel lblBackground;
   private javax.swing.JTable tblCursos;

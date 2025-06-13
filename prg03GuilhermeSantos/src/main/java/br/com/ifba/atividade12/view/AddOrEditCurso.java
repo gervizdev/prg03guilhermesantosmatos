@@ -7,7 +7,6 @@ package br.com.ifba.atividade12.view;
 import br.com.ifba.atividade12.entity.Curso;
 import br.com.ifba.atividade12.util.CursoSave;
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
 
 /**
  *
@@ -25,13 +24,13 @@ public class AddOrEditCurso extends javax.swing.JDialog {
   public AddOrEditCurso(java.awt.Frame parent, boolean modal, boolean edit, Curso curso) {
     super(parent, modal);
     initComponents();
-
+    //define se a tela estara no modo de edicao ou nao
     if (edit) {
       txtInName.setText(curso.getNome());
       txtInCod.setText(curso.getCodigoCurso());
       chkInActive.setSelected(curso.isAtivo());
       btnAdd.setText("Editar");
-      lblId.setText("" + curso.getId());
+      lblId.setText("id: " + curso.getId());
       editando = true;
       cursoOriginal = curso;
     }
@@ -65,11 +64,6 @@ public class AddOrEditCurso extends javax.swing.JDialog {
     setResizable(false);
     setSize(new java.awt.Dimension(390, 250));
     setType(java.awt.Window.Type.UTILITY);
-    addFocusListener(new java.awt.event.FocusAdapter() {
-      public void focusLost(java.awt.event.FocusEvent evt) {
-        formFocusLost(evt);
-      }
-    });
     getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
     lblTxtName.setText("nome:");
@@ -80,20 +74,8 @@ public class AddOrEditCurso extends javax.swing.JDialog {
 
     lblTxtActive.setText("Ativo:");
     getContentPane().add(lblTxtActive, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 141, -1, -1));
-
-    chkInActive.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        chkInActiveActionPerformed(evt);
-      }
-    });
     getContentPane().add(chkInActive, new org.netbeans.lib.awtextra.AbsoluteConstraints(78, 141, -1, -1));
     getContentPane().add(txtInCod, new org.netbeans.lib.awtextra.AbsoluteConstraints(78, 82, 100, -1));
-
-    txtInName.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        txtInNameActionPerformed(evt);
-      }
-    });
     getContentPane().add(txtInName, new org.netbeans.lib.awtextra.AbsoluteConstraints(78, 22, 300, -1));
 
     btnCancel.setText("Cancelar");
@@ -116,18 +98,11 @@ public class AddOrEditCurso extends javax.swing.JDialog {
     pack();
   }// </editor-fold>//GEN-END:initComponents
 
-  private void chkInActiveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkInActiveActionPerformed
-    // TODO add your handling code here:
-  }//GEN-LAST:event_chkInActiveActionPerformed
-
-  private void txtInNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtInNameActionPerformed
-    // TODO add your handling code here:
-  }//GEN-LAST:event_txtInNameActionPerformed
-
-  private void formFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_formFocusLost
-  }//GEN-LAST:event_formFocusLost
-
   private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+    txtInCod.setText("");
+    txtInName.setText("");
+    chkInActive.setSelected(false);
+    lblId.setText("");
     this.dispose();
   }//GEN-LAST:event_btnCancelActionPerformed
 
@@ -141,20 +116,25 @@ public class AddOrEditCurso extends javax.swing.JDialog {
       );
     } else {
       if (editando) {
-        Curso curso = null;
+        Curso curso = new Curso();
         curso.setNome(txtInName.getText());
         curso.setCodigoCurso(txtInCod.getText());
         curso.setAtivo(chkInActive.isSelected());
         curso.setId(cursoOriginal.getId());
         manager.saveCurso(curso);
       } else {
-        Curso curso = null;
+        Curso curso = new Curso();
         curso.setNome(txtInName.getText());
         curso.setCodigoCurso(txtInCod.getText());
         curso.setAtivo(chkInActive.isSelected());
         manager.saveCurso(curso);
       }
     }
+    txtInCod.setText("");
+    txtInName.setText("");
+    chkInActive.setSelected(false);
+    lblId.setText("");
+    this.dispose();
   }//GEN-LAST:event_btnAddActionPerformed
 
   /**

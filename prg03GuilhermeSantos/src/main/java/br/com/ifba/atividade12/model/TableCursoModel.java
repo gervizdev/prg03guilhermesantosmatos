@@ -15,15 +15,13 @@ import javax.swing.table.AbstractTableModel;
  */
 public class TableCursoModel extends AbstractTableModel {
 
-  // Nomes das colunas que vão aparecer na sua tabela
+  // Nomes das colunas que vão aparecer na tabela
   private final String[] colunas = {"ID", "NOME", "CODIGO", "ATIVO", "REMOVER", "EDITAR"};
 
-  // Lista onde vamos guardar os objetos Curso
   private List<Curso> dados;
 
-  // Construtor: ele recebe a lista inicial de cursos para a tabela
   public TableCursoModel(List<Curso> dadosIniciais) {
-    // Criamos uma nova ArrayList para não mexer diretamente na lista original
+    // Cria uma nova ArrayList para não mexer diretamente na lista original
     this.dados = new ArrayList<>(dadosIniciais);
   }
 
@@ -85,10 +83,9 @@ public class TableCursoModel extends AbstractTableModel {
     return null;
   }
 
-  // Método para atualizar a lista completa de dados da tabela (usado na busca, por exemplo)
+  // Método para atualizar a lista completa de dados da tabela 
   public void setDados(List<Curso> novosDados) {
     this.dados = new ArrayList<>(novosDados);
-    // Avisa a tabela que todos os dados mudaram (recria a tabela visualmente)
     fireTableDataChanged();
   }
 
@@ -96,26 +93,6 @@ public class TableCursoModel extends AbstractTableModel {
   public boolean isCellEditable(int rowIndex, int columnIndex) {
     // As duas últimas colunas (REMOVER e EDITAR) são editáveis para permitir o clique nos botões
     return columnIndex == getColumnCount() - 1 || columnIndex == getColumnCount() - 2;
-  }
-
-  // Método para definir o valor de uma célula (usado se você fosse editar os dados diretamente na tabela)
-  @Override
-  public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-    Curso curso = dados.get(rowIndex);
-    switch (columnIndex) {
-      case 1:
-        curso.setNome((String) aValue);
-        break;
-      case 2:
-        curso.setCodigoCurso((String) aValue);
-        break;
-      case 3:
-        curso.setAtivo((boolean) aValue);
-        break;
-
-    }
-
-    fireTableCellUpdated(rowIndex, columnIndex);
   }
 
 }
