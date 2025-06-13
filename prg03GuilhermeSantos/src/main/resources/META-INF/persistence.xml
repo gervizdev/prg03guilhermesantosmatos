@@ -9,6 +9,7 @@
             <property name="jakarta.persistence.jdbc.user" value="postgres.cfndtjdnnfstramgbomt"/>
             <property name="jakarta.persistence.jdbc.password" value="ZiTaE4rFWyQdt3YR"/>
             
+            
             <property name="hibernate.hbm2ddl.auto" value="update"/>
             <property name="hibernate.show_sql" value="true"/>
         </properties>
