@@ -1,6 +1,5 @@
-package br.com.ifba.atividade12.util;
+package br.com.ifba.atividade13.util;
 
-import br.com.ifba.atividade12.util.ButtonRenderer;
 import java.awt.Component;
 import java.awt.BorderLayout;
 import java.awt.Color;

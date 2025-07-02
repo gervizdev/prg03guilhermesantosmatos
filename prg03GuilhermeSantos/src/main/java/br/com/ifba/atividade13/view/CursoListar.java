@@ -2,15 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package br.com.ifba.atividade12.view;
+package br.com.ifba.atividade13.view;
 
-import br.com.ifba.atividade12.view.CursoListar;
-import br.com.ifba.atividade12.view.AddOrEditCurso;
-import br.com.ifba.atividade12.util.ButtonEditor;
-import br.com.ifba.atividade12.util.CursoSave;
-import br.com.ifba.atividade12.util.ButtonRenderer;
-import br.com.ifba.atividade12.model.TableCursoModel;
-import br.com.ifba.atividade12.entity.Curso;
+import br.com.ifba.atividade13.model.TableCursoModel;
+import br.com.ifba.atividade13.entity.CursoA13;
+import br.com.ifba.atividade13.util.*;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
@@ -68,7 +64,7 @@ public class CursoListar extends javax.swing.JFrame {
   }
 
   public void removerCursoDaTabela(int rowIndex) {
-    Curso cursoParaRemover = tableModel.getCursoAt(rowIndex);
+    CursoA13 cursoParaRemover = tableModel.getCursoAt(rowIndex);
 
     if (cursoParaRemover != null) {
       String nomeCurso = cursoParaRemover.getNome();
@@ -103,13 +99,13 @@ public class CursoListar extends javax.swing.JFrame {
 
   // Método para editar um curso da tabela
   public void editarCursoDaTabela(int rowIndex) {
-    Curso cursoParaEditar = tableModel.getCursoAt(rowIndex);
+    CursoA13 cursoParaEditar = tableModel.getCursoAt(rowIndex);
     AddOrEditCurso editCurso = new AddOrEditCurso(this, true, true, cursoParaEditar);
     editCurso.setVisible(true);
   }
 
   private void realizaBusca(String termoBusca) {
-    List<Curso> resultados = new ArrayList<>();
+    List<CursoA13> resultados = new ArrayList<>();
     String termoLowerCase = termoBusca.toLowerCase().trim(); // Converte para minúsculas e remove espaços
 
     if (termoLowerCase.isEmpty()) {
@@ -117,7 +113,7 @@ public class CursoListar extends javax.swing.JFrame {
       resultados.addAll(manager.getAllCursos());
     } else {
       // Filtra a lista de cursos original
-      for (Curso curso : manager.getAllCursos()) {
+      for (CursoA13 curso : manager.getAllCursos()) {
         // Verifica se o termo de busca está no nome, codigo ou id
         try {
           if (curso.getNome().toLowerCase().contains(termoLowerCase)

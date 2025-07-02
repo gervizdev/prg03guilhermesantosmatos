@@ -2,11 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package br.com.ifba.atividade12.view;
+package br.com.ifba.atividade13.view;
 
-import br.com.ifba.atividade12.view.AddOrEditCurso;
-import br.com.ifba.atividade12.entity.Curso;
-import br.com.ifba.atividade12.util.CursoSave;
+import br.com.ifba.atividade13.entity.CursoA13;
+import br.com.ifba.atividade13.util.CursoSave;
 import javax.swing.JOptionPane;
 
 /**
@@ -17,12 +16,12 @@ public class AddOrEditCurso extends javax.swing.JDialog {
 
   CursoSave manager = new CursoSave();
   boolean editando = false;
-  Curso cursoOriginal = new Curso();
+  CursoA13 cursoOriginal = new CursoA13();
 
   /**
    * Creates new form AddCurso
    */
-  public AddOrEditCurso(java.awt.Frame parent, boolean modal, boolean edit, Curso curso) {
+  public AddOrEditCurso(java.awt.Frame parent, boolean modal, boolean edit, CursoA13 curso) {
     super(parent, modal);
     initComponents();
     //define se a tela estara no modo de edicao ou nao
@@ -61,7 +60,6 @@ public class AddOrEditCurso extends javax.swing.JDialog {
     setAutoRequestFocus(false);
     setIconImages(null);
     setName("AddCurso"); // NOI18N
-    setPreferredSize(new java.awt.Dimension(390, 250));
     setResizable(false);
     setSize(new java.awt.Dimension(390, 250));
     setType(java.awt.Window.Type.UTILITY);
@@ -117,14 +115,14 @@ public class AddOrEditCurso extends javax.swing.JDialog {
       );
     } else {
       if (editando) {
-        Curso curso = new Curso();
+        CursoA13 curso = new CursoA13();
         curso.setNome(txtInName.getText());
         curso.setCodigoCurso(txtInCod.getText());
         curso.setAtivo(chkInActive.isSelected());
         curso.setId(cursoOriginal.getId());
         manager.saveCurso(curso);
       } else {
-        Curso curso = new Curso();
+        CursoA13 curso = new CursoA13();
         curso.setNome(txtInName.getText());
         curso.setCodigoCurso(txtInCod.getText());
         curso.setAtivo(chkInActive.isSelected());

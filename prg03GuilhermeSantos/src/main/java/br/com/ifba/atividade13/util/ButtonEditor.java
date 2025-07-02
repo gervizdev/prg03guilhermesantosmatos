@@ -1,8 +1,7 @@
-package br.com.ifba.atividade12.util;
+package br.com.ifba.atividade13.util;
 
-import br.com.ifba.atividade12.util.ButtonEditor;
-import br.com.ifba.atividade12.entity.Curso;
-import br.com.ifba.atividade12.view.CursoListar;
+import br.com.ifba.atividade13.entity.CursoA13;
+import br.com.ifba.atividade13.view.CursoListar;
 import java.awt.Component;
 import java.awt.Color;
 import java.awt.event.ActionEvent;

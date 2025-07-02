@@ -2,10 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package br.com.ifba.atividade12.util;
+package br.com.ifba.atividade13.util;
 
-import br.com.ifba.atividade12.util.utilConnection;
-import br.com.ifba.atividade12.entity.Curso;
+import br.com.ifba.atividade13.entity.CursoA13;
 import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +15,7 @@ import java.util.List;
  */
 public class CursoSave {
 
-  public void saveCurso(Curso curso) {
+  public void saveCurso(CursoA13 curso) {
     EntityManager em = null;
     EntityTransaction transaction = null;
 
@@ -41,7 +40,7 @@ public class CursoSave {
     }
   }
 
-  public void deleteCurso(Curso curso) {
+  public void deleteCurso(CursoA13 curso) {
     //tenta deletar, se der erro nao crasha e depois que termina fecha o entity manager
     EntityManager em = null;
     EntityTransaction transaction = null;
@@ -51,7 +50,7 @@ public class CursoSave {
 
       transaction = em.getTransaction();
       transaction.begin();
-      Curso cursoD = em.merge(curso);
+      CursoA13 cursoD = em.merge(curso);
       em.remove(cursoD);
       transaction.commit();
     } catch (Exception e) {
@@ -68,16 +67,16 @@ public class CursoSave {
     }
   }
 
-  public List<Curso> getAllCursos() {
+  public List<CursoA13> getAllCursos() {
     EntityManager em = null;
-    List<Curso> cursos = new ArrayList<>();
+    List<CursoA13> cursos = new ArrayList<>();
     //tenta salvar, se der erro nao crasha e depois que termina fecha o entity manager
     try {
 
       em = utilConnection.getEM();
 
-      String jpql = "SELECT c FROM Curso c";
-      TypedQuery<Curso> query = em.createQuery(jpql, Curso.class);
+      String jpql = "SELECT c FROM CursoA13 c";
+      TypedQuery<CursoA13> query = em.createQuery(jpql, CursoA13.class);
       cursos = query.getResultList();
 
     } catch (Exception e) {
@@ -91,9 +90,9 @@ public class CursoSave {
     return cursos;
   }
 
-  public void saveAllCursos(List<Curso> allCursos) {
+  public void saveAllCursos(List<CursoA13> allCursos) {
     if (allCursos != null && !allCursos.isEmpty()) {
-      for (Curso curso : allCursos) {
+      for (CursoA13 curso : allCursos) {
         try {
           saveCurso(curso);
           System.out.println(" Curso '" + curso.getNome() + "' salvo com sucesso!");
