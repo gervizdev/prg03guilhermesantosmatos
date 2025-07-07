@@ -17,15 +17,21 @@ import jakarta.persistence.Column;
 @Table(name = "cursos")
 public class CursoA15 extends PersistenceEntity {
 
+  // Nome do curso, campo obrigatório
   @Column(name = "nome", nullable = false)
   private String nome;
+
+  // Código único do curso, obrigatório, com limite de 255 caracteres
   @Column(name = "codigo_curso", nullable = false, unique = true, length = 255)
   private String codigoCurso;
+
+  // Indica se o curso está ativo ou não
   private boolean ativo;
 
   public CursoA15() {
   }
 
+  // Construtor com parâmetros para facilitar criação de objetos
   public CursoA15(long id, String nome, String codigoCurso, boolean ativo) {
     this.nome = nome;
     this.codigoCurso = codigoCurso;

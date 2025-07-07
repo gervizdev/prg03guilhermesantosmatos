@@ -16,6 +16,7 @@ public class CursoDao extends GenericDao<CursoA15> implements CursoIDao {
 
   @Override
   public List<CursoA15> findByNome(String nome) {
+    // Busca lista de cursos cujo nome contenha a string passada (LIKE %nome%)
     String jpql = "SELECT c FROM CursoA15 c WHERE c.nome LIKE :nome";
     return entityManager.createQuery(jpql, CursoA15.class)
         .setParameter("nome", "%" + nome + "%")
