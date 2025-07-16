@@ -4,25 +4,35 @@
  */
 package br.com.ifba.atividade16.view;
 
+import br.com.ifba.atividade16.curso.controller.CursoController;
 import br.com.ifba.atividade16.curso.entity.CursoA16;
-import br.com.ifba.atividade16.curso.dao.CursoDao;
+import br.com.ifba.atividade16.tableModel.TableCursoModel;
 import javax.swing.JOptionPane;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
  *
  * @author gerviz
  */
-
+@Component
 public class AddOrEditCurso extends javax.swing.JDialog {
 
-  CursoDao manager = new CursoDao();
+  @Autowired
+  private CursoController controller;
+
   boolean editando = false;
   CursoA16 cursoOriginal = new CursoA16();
+  public TableCursoModel table;
 
   /**
    * Creates new form AddCurso
    */
+  public AddOrEditCurso() {
+    super();
+    initComponents();
+  }
+
   public AddOrEditCurso(java.awt.Frame parent, boolean modal, boolean edit, CursoA16 curso) {
     super(parent, modal);
     initComponents();
@@ -36,6 +46,50 @@ public class AddOrEditCurso extends javax.swing.JDialog {
       editando = true;
       cursoOriginal = curso;
     }
+  }
+
+  public AddOrEditCurso(java.awt.Frame parent, boolean modal, boolean edit, CursoA16 curso, TableCursoModel table) {
+    super(parent, modal);
+    this.table = table;
+    initComponents();
+    if (edit && curso != null) {
+      txtInName.setText(curso.getNome());
+      txtInCod.setText(curso.getCodigoCurso());
+      chkInActive.setSelected(curso.isAtivo());
+      btnAdd.setText("Editar");
+      lblId.setText("id: " + curso.getId());
+      editando = true;
+      cursoOriginal = curso;
+    } else {
+      editando = false;
+      cursoOriginal = new CursoA16();
+    }
+  }
+
+  public AddOrEditCurso(CursoListar parent, boolean modal, boolean edit, CursoA16 curso, TableCursoModel table, CursoController controller) {
+    super(parent, modal);
+    this.table = table;
+    this.controller = controller;
+    initComponents();
+    if (edit && curso != null) {
+      txtInName.setText(curso.getNome());
+      txtInCod.setText(curso.getCodigoCurso());
+      chkInActive.setSelected(curso.isAtivo());
+      btnAdd.setText("Editar");
+      lblId.setText("id: " + curso.getId());
+      editando = true;
+      cursoOriginal = curso;
+    } else {
+      editando = false;
+      cursoOriginal = new CursoA16();
+    }
+  }
+
+  public void limparCampos() {
+    txtInCod.setText("");
+    txtInName.setText("");
+    lblId.setText("");
+    chkInActive.setSelected(false);
   }
 
   /**
@@ -111,31 +165,31 @@ public class AddOrEditCurso extends javax.swing.JDialog {
     if (txtInName.getText().isBlank() || txtInCod.getText().isBlank()) {
       JOptionPane.showMessageDialog(
           null,
-          "Preencha todos os campos! Há algo em branco.",
+          "Preencha todos os campos! H[31;1mHá algo em branco.",
           "Erro",
           JOptionPane.ERROR_MESSAGE
       );
     } else {
+      CursoA16 curso = new CursoA16();
+      curso.setNome(txtInName.getText());
+      curso.setCodigoCurso(txtInCod.getText());
+      curso.setAtivo(chkInActive.isSelected());
       if (editando) {
-        CursoA16 curso = new CursoA16();
-        curso.setNome(txtInName.getText());
-        curso.setCodigoCurso(txtInCod.getText());
-        curso.setAtivo(chkInActive.isSelected());
         curso.setId(cursoOriginal.getId());
-        manager.save(curso);
+        controller.update(curso);
+        limparCampos();
+        JOptionPane.showMessageDialog(this, "Curso editado com sucesso!");
       } else {
-        CursoA16 curso = new CursoA16();
-        curso.setNome(txtInName.getText());
-        curso.setCodigoCurso(txtInCod.getText());
-        curso.setAtivo(chkInActive.isSelected());
-        manager.save(curso);
+        controller.save(curso);
+        limparCampos();
+        JOptionPane.showMessageDialog(this, "Curso adicionado com sucesso!");
       }
+      if (table != null) {
+        table.setDados(controller.findAll());
+        table.fireTableDataChanged();
+      }
+      this.dispose();
     }
-    txtInCod.setText("");
-    txtInName.setText("");
-    chkInActive.setSelected(false);
-    lblId.setText("");
-    this.dispose();
   }//GEN-LAST:event_btnAddActionPerformed
 
   /**

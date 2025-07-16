@@ -1,22 +1,28 @@
 package br.com.ifba.atividade16.util;
 
-import jakarta.persistence.*;
+import jakarta.persistence.EntityManager;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
 import javax.swing.JOptionPane;
 
-public class TestaConexao {
 
-  public static void main(String[] args) {
-    try {
-      EntityManagerFactory emf = Persistence.createEntityManagerFactory("myDB");
-      EntityManager em = emf.createEntityManager();
+public class TestaConexao implements CommandLineRunner {
 
-      JOptionPane.showMessageDialog(null, "Conectado com sucesso!", "Status da Conexão", JOptionPane.INFORMATION_MESSAGE);
+    @Autowired
+    private EntityManager em;
 
-      em.close();
-      emf.close();
-    } catch (Exception e) {
-      JOptionPane.showMessageDialog(null, "Erro ao conectar: \n" + e.getMessage(), "Status da Conexão", JOptionPane.ERROR_MESSAGE);
-      e.printStackTrace();
+    @Override
+    public void run(String... args) throws Exception {
+        try {
+            if (em.isOpen()) {
+                JOptionPane.showMessageDialog(null, "Conectado com sucesso!", "Status da Conexão", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Falha na conexão!", "Status da Conexão", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao conectar: \n" + e.getMessage(), "Status da Conexão", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
     }
-  }
 }

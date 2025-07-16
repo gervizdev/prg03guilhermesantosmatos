@@ -4,7 +4,6 @@
  */
 package br.com.ifba.atividade16.curso.service;
 
-import br.com.ifba.atividade16.curso.dao.CursoDao;
 import br.com.ifba.atividade16.curso.dao.CursoIDao;
 import br.com.ifba.atividade16.curso.entity.CursoA16;
 import java.util.List;
@@ -43,7 +42,15 @@ public class CursoService implements CursoIService {
           throw new RuntimeException("Curso já existente no banco de dados");
       }
       // Salva e retorna o curso
-      return cursoDao.save(curso);
+      try {
+        return cursoDao.save(curso);
+    } catch (Exception e) {
+        String msg = e.getMessage();
+        if (msg != null && msg.contains("duplicate key")) {
+            throw new RuntimeException("Código do curso já existe!");
+        }
+        throw new RuntimeException("Erro ao salvar o curso: " + msg);
+    }
   }
 
   @Override
@@ -52,8 +59,8 @@ public class CursoService implements CursoIService {
       if (curso == null || curso.getId() == null) {
           throw new RuntimeException("Curso inválido para atualização");
       }
-      // Atualiza e retorna o curso
-      return cursoDao.update(curso);
+      // O método save do JpaRepository faz update se o ID existir
+      return cursoDao.save(curso);
   }
 
   @Override
@@ -72,8 +79,8 @@ public class CursoService implements CursoIService {
       if (id == null) {
           throw new RuntimeException("ID inválido");
       }
-      // Busca e retorna o curso pelo ID
-      return cursoDao.findById(id);
+      // O método findById retorna Optional, então usamos orElse(null)
+      return cursoDao.findById(id).orElse(null);
   }
 
   @Override
@@ -84,5 +91,10 @@ public class CursoService implements CursoIService {
       }
       // Busca e retorna lista de cursos que contenham o nome
       return cursoDao.findByNome(nome);
+  }
+
+  @Override
+  public List<CursoA16> findAll() throws RuntimeException {
+    return cursoDao.findAll();
   }
 }

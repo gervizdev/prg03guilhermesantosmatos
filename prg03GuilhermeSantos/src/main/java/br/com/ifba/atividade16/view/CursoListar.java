@@ -4,8 +4,8 @@
  */
 package br.com.ifba.atividade16.view;
 
+import br.com.ifba.atividade16.curso.controller.CursoController;
 import br.com.ifba.atividade16.util.ButtonRenderer;
-import br.com.ifba.atividade16.curso.dao.CursoDao;
 import br.com.ifba.atividade16.util.ButtonEditor;
 import br.com.ifba.atividade16.tableModel.TableCursoModel;
 import br.com.ifba.atividade16.curso.entity.CursoA16;
@@ -13,6 +13,8 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
 
 /**
@@ -22,17 +24,19 @@ import org.springframework.stereotype.Component;
 @Component
 public class CursoListar extends javax.swing.JFrame {
 
-  CursoDao manager = new CursoDao();
-  AddOrEditCurso addCurso = new AddOrEditCurso(this, true, false, null);
+  @Autowired
+  public CursoController manager;
+  @Autowired
+  private ConfigurableApplicationContext context;
   public TableCursoModel tableModel;
 
   /**
    * Creates new form MainFrame
    */
   public CursoListar() {
-    tableModel = new TableCursoModel(manager.findAll());
 
     initComponents();
+    tableModel = new TableCursoModel(new ArrayList<>());
     tblCursos.setModel(tableModel);
 
     // Configura o Renderizador e Editor para as colunas de "Remover" e "Editar"
@@ -65,6 +69,17 @@ public class CursoListar extends javax.swing.JFrame {
         }
       }
     });
+  }
+
+  public void atualizarTabela() {
+    List<CursoA16> cursos = manager.findAll();
+    tableModel.setDados(cursos);
+  }
+
+  private void abrirAddOrEditCurso(boolean edit, CursoA16 curso) {
+    AddOrEditCurso dialog = context.getBean(AddOrEditCurso.class);
+    dialog.setLocationRelativeTo(this);
+    dialog.setVisible(true);
   }
 
   public void removerCursoDaTabela(int rowIndex) {
@@ -104,34 +119,9 @@ public class CursoListar extends javax.swing.JFrame {
   // Método para editar um curso da tabela
   public void editarCursoDaTabela(int rowIndex) {
     CursoA16 cursoParaEditar = tableModel.getCursoAt(rowIndex);
-    AddOrEditCurso editCurso = new AddOrEditCurso(this, true, true, cursoParaEditar);
+    AddOrEditCurso editCurso = new AddOrEditCurso(this, true, true, cursoParaEditar, tableModel, manager);
+    editCurso.setLocationRelativeTo(this);
     editCurso.setVisible(true);
-  }
-
-  private void realizaBusca(String termoBusca) {
-    List<CursoA16> resultados = new ArrayList<>();
-    String termoLowerCase = termoBusca.toLowerCase().trim(); // Converte para minúsculas e remove espaços
-
-    if (termoLowerCase.isEmpty()) {
-      // Se o campo de busca estiver vazio, mostra todos os cursos originais
-      resultados.addAll(manager.findAll());
-    } else {
-      // Filtra a lista de cursos original
-      for (CursoA16 curso : manager.findAll()) {
-        // Verifica se o termo de busca está no nome, codigo ou id
-        try {
-          if (curso.getNome().toLowerCase().contains(termoLowerCase)
-              || curso.getCodigoCurso().toLowerCase().contains(termoLowerCase)
-              || curso.getId() == Integer.parseInt(termoBusca)) {
-            resultados.add(curso);
-          }
-        } catch (NumberFormatException e) {
-          //so pra n retornar erro
-        }
-      }
-    }
-    // Atualiza o modelo da tabela com os resultados (filtrados ou todos)
-    tableModel.setDados(resultados);
   }
 
   /**
@@ -153,7 +143,6 @@ public class CursoListar extends javax.swing.JFrame {
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
     setTitle("cursos");
-    setPreferredSize(new java.awt.Dimension(740, 480));
     setResizable(false);
     setSize(new java.awt.Dimension(740, 480));
     getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -184,9 +173,9 @@ public class CursoListar extends javax.swing.JFrame {
     jScrollPane1.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 
     txtSearch.setText("jTextField1");
-    txtSearch.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        txtSearchActionPerformed(evt);
+    txtSearch.addKeyListener(new java.awt.event.KeyAdapter() {
+      public void keyTyped(java.awt.event.KeyEvent evt) {
+        txtSearchKeyTyped(evt);
       }
     });
     getContentPane().add(txtSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(68, 20, 82, -1));
@@ -217,49 +206,31 @@ public class CursoListar extends javax.swing.JFrame {
     getContentPane().add(btnHome, new org.netbeans.lib.awtextra.AbsoluteConstraints(519, 20, 82, -1));
 
     lblBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/ifba/atividade12/view/images/backgroung.png"))); // NOI18N
-    getContentPane().add(lblBackground, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 880, -1));
+    getContentPane().add(lblBackground, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
     pack();
   }// </editor-fold>//GEN-END:initComponents
-
-  private void txtSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchActionPerformed
-    realizaBusca(txtSearch.getText());
-  }//GEN-LAST:event_txtSearchActionPerformed
 
   private void btnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeActionPerformed
     this.dispose();
   }//GEN-LAST:event_btnHomeActionPerformed
 
   private void btnAddCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddCursoActionPerformed
-    addCurso.setVisible(true);
+    abrirAddOrEditCurso(false, null);
+    atualizarTabela(); // Atualiza a tabela após fechar o diálogo de adição
   }//GEN-LAST:event_btnAddCursoActionPerformed
 
   private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
     tableModel.setDados(manager.findAll());
   }//GEN-LAST:event_btnRefreshActionPerformed
 
+  private void txtSearchKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyTyped
+    tableModel.setDados(manager.findByNome(txtSearch.getText()));
+  }//GEN-LAST:event_txtSearchKeyTyped
+
   /**
    * @param args the command line arguments
    */
-  public static void main(String args[]) {
-    /* Set the Nimbus look and feel */
-    //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-    /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-     */
-    try {
-      javax.swing.UIManager.setLookAndFeel(new com.formdev.flatlaf.FlatDarculaLaf());
-    } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-      java.util.logging.Logger.getLogger(CursoListar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-    }
-    //</editor-fold>
-    //</editor-fold>
-
-    /* Create and display the form */
-    java.awt.EventQueue.invokeLater(() -> {
-      new CursoListar().setVisible(true);
-    });
-  }
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton btnAddCurso;

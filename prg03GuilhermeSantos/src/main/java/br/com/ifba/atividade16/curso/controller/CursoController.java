@@ -6,7 +6,6 @@ package br.com.ifba.atividade16.curso.controller;
 
 import br.com.ifba.atividade16.curso.entity.CursoA16;
 import br.com.ifba.atividade16.curso.service.CursoIService;
-import br.com.ifba.atividade16.curso.service.CursoService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,10 +18,14 @@ import org.springframework.stereotype.Controller;
 public class CursoController implements CursoIController {
 
   @Autowired
-  private final CursoIService cursoIService;
+  private CursoIService cursoIService;
 
   public CursoController(CursoIService cursoIService) {
     this.cursoIService = cursoIService;
+  }
+
+  public CursoController() {
+    
   }
 
   @Override
@@ -55,4 +58,8 @@ public class CursoController implements CursoIController {
     return cursoIService.findByNome(nome);
   }
 
+  public List<CursoA16> findAll() throws RuntimeException {
+    //retorna todos os cursos
+    return cursoIService.findAll();
+  }
 }

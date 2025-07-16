@@ -4,73 +4,45 @@
  */
 package br.com.ifba.atividade16.infrastructure.dao;
 
-import br.com.ifba.atividade16.infrastructure.entity.PersistenceEntity;
-import jakarta.persistence.*;
-import java.lang.reflect.ParameterizedType;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import java.util.List;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author gerviz
  */
-public class GenericDao<Entity extends PersistenceEntity> implements GenericIDao<Entity> {
+@Repository
+public abstract class GenericDao<T> {
 
-  // EntityManager compartilhado para operações de persistência
-  protected static EntityManager entityManager;
+    @PersistenceContext
+    protected EntityManager entityManager;
 
-  // Inicialização estática do EntityManager com persistence unit "myDB"
-  static {
-    EntityManagerFactory factory = Persistence
-        .createEntityManagerFactory("myDB");
-    entityManager = factory.createEntityManager();
-  }
+    private final Class<T> entityClass;
 
-  @Override
-  public Entity save(Entity entity) {
-    // Inicia transação, persiste entidade e comita
-    entityManager.getTransaction().begin();
-    entityManager.persist(entity);
-    entityManager.getTransaction().commit();
-    return entity;
-  }
+    protected GenericDao(Class<T> entityClass) {
+        this.entityClass = entityClass;
+    }
 
-  @Override
-  public Entity update(Entity entity) {
-    // Inicia transação, atualiza entidade e comita
-    entityManager.getTransaction().begin();
-    entityManager.merge(entity);
-    entityManager.getTransaction().commit();
-    return entity;
-  }
+    public void save(T entity) {
+        entityManager.persist(entity);
+    }
 
-  @Override
-  public void delete(Entity entity) {
-    // Busca a entidade pelo ID para garantir que está gerenciada
-    entity = findById(entity.getId());
-    entityManager.getTransaction().begin();
-    entityManager.remove(entity);
-    entityManager.getTransaction().commit();
-  }
+    public void update(T entity) {
+        entityManager.merge(entity);
+    }
 
-  @Override
-  public List<Entity> findAll() {
-    // Busca todas as entidades do tipo usando JPQL dinâmico
-    return entityManager.createQuery("from "
-        + getTypeClass().getName()).getResultList();
-  }
+    public void delete(T entity) {
+        entityManager.remove(entityManager.contains(entity) ? entity : entityManager.merge(entity));
+    }
 
-  @Override
-  public Entity findById(Long id) {
-    // Busca entidade por ID
-    return (Entity) entityManager.find(getTypeClass(), id);
-  }
+    public T findById(Long id) {
+        return entityManager.find(entityClass, id);
+    }
 
-  // Obtém a classe concreta do tipo genérico usado no DAO
-  protected Class<?> getTypeClass() {
-    Class<?> clazz = (Class<?>) ((ParameterizedType) this.getClass()
-        .getGenericSuperclass())
-        .getActualTypeArguments()[0];
-    return clazz;
-  }
-
+    public List<T> findAll() {
+        String jpql = "SELECT e FROM " + entityClass.getSimpleName() + " e";
+        return entityManager.createQuery(jpql, entityClass).getResultList();
+    }
 }

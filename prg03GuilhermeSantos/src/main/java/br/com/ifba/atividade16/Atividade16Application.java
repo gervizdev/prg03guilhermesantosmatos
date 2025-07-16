@@ -14,6 +14,7 @@ public class Atividade16Application {
                 .headless(false).run(args);
 
         CursoListar telaCursoSave = context.getBean(CursoListar.class);
+        telaCursoSave.atualizarTabela();
         telaCursoSave.setVisible(true);
     }
 

@@ -22,4 +22,6 @@ public interface CursoIService {
   CursoA16 findById(Long id) throws RuntimeException;
 
   List<CursoA16> findByNome(String nome) throws RuntimeException;
+  
+  List<CursoA16> findAll() throws RuntimeException;
 }
