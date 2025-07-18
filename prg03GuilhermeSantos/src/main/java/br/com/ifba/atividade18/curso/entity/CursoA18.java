@@ -17,10 +17,17 @@ import lombok.*;
 @Entity
 @Table(name = "cursos")
 @Data
+@EqualsAndHashCode(callSuper=false)
+@NoArgsConstructor
 public class CursoA18 extends PersistenceEntity {
   @Column(name = "nome", nullable = false)
   private String nome;
-  @Column(name = "codigo_curso", nullable = false, unique = true, length = 6)
+  @Column(name = "codigo_curso", nullable = false, unique = true, length = 12)
   private String codigoCurso;
   private boolean ativo;
+  
+  @Override
+  public String toString() {
+        return this.nome;
+    }
 }

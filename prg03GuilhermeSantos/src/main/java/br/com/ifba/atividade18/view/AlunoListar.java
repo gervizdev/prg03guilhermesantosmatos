@@ -4,58 +4,59 @@
  */
 package br.com.ifba.atividade18.view;
 
-import br.com.ifba.atividade18.curso.controller.CursoController;
+import br.com.ifba.atividade18.aluno.controller.AlunoController;
 import br.com.ifba.atividade18.util.ButtonRenderer;
 import br.com.ifba.atividade18.util.ButtonEditor;
-import br.com.ifba.atividade18.tableModel.TableCursoModel;
-import br.com.ifba.atividade18.curso.entity.CursoA18;
+import br.com.ifba.atividade18.tableModel.TableAlunoModel;
+import br.com.ifba.atividade18.aluno.entity.AlunoA18;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableCellRenderer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
+import javax.swing.table.DefaultTableCellRenderer;
 
 /**
  *
  * @author gerviz
  */
 @Component
-public class CursoListar extends javax.swing.JFrame {
+public class AlunoListar extends javax.swing.JFrame {
 
   @Autowired
-  public CursoController manager;
+  public AlunoController manager;
   @Autowired
   private ConfigurableApplicationContext context;
-  public TableCursoModel tableModel;
+  public TableAlunoModel tableModel;
 
   /**
    * Creates new form MainFrame
    */
-  public CursoListar() {
+  public AlunoListar() {
 
     initComponents();
-    tableModel = new TableCursoModel(new ArrayList<>());
-    tblCursos.setModel(tableModel);
+    tableModel = new TableAlunoModel(new ArrayList<>());
+    tblAlunos.setModel(tableModel);
     DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
     renderer.setBackground(Color.DARK_GRAY);
     renderer.setForeground(Color.WHITE);
     renderer.setHorizontalAlignment(DefaultTableCellRenderer.CENTER);
     // Aplica o renderizador a todas as colunas do cabeçalho da tabela
-    for (int i = 0; i < tblCursos.getColumnModel().getColumnCount(); i++) {
-      tblCursos.getColumnModel().getColumn(i).setHeaderRenderer(renderer);
+    for (int i = 0; i < tblAlunos.getColumnModel().getColumnCount(); i++) {
+      tblAlunos.getColumnModel().getColumn(i).setHeaderRenderer(renderer);
     }
-    // Configura o Renderizador e Editor para as colunas de "Remover" e "Editar"
-    // Coluna "REMOVER" (índice 4)
-    tblCursos.getColumnModel().getColumn(4).setCellRenderer(new ButtonRenderer());
-    // Passa 'this' (a própria CursoListar) para o ButtonEditor poder chamar os métodos
-    tblCursos.getColumnModel().getColumn(4).setCellEditor(new ButtonEditor(new javax.swing.JCheckBox(), this));
 
-    // Coluna "EDITAR" (índice 5)
-    tblCursos.getColumnModel().getColumn(5).setCellRenderer(new ButtonRenderer());
-    tblCursos.getColumnModel().getColumn(5).setCellEditor(new ButtonEditor(new javax.swing.JCheckBox(), this));
+    // Configura o Renderizador e Editor para as colunas de "Remover" e "Editar"
+    // Coluna "REMOVER" (índice 6)
+    tblAlunos.getColumnModel().getColumn(6).setCellRenderer(new ButtonRenderer());
+    // Passa 'this' (a própria AlunoListar) para o ButtonEditor poder chamar os métodos
+    tblAlunos.getColumnModel().getColumn(6).setCellEditor(new ButtonEditor(new javax.swing.JCheckBox(), this));
+
+    // Coluna "EDITAR" (índice 7)
+    tblAlunos.getColumnModel().getColumn(7).setCellRenderer(new ButtonRenderer());
+    tblAlunos.getColumnModel().getColumn(7).setCellEditor(new ButtonEditor(new javax.swing.JCheckBox(), this));
 
     //faz uma simulação de um placeholder
     txtSearch.setText("Procurar...");
@@ -80,56 +81,57 @@ public class CursoListar extends javax.swing.JFrame {
   }
 
   public void atualizarTabela() {
-    List<CursoA18> cursos = manager.findAll();
-    tableModel.setDados(cursos);
+    List<AlunoA18> alunos = manager.findAll();
+    tableModel.setDados(alunos);
   }
 
-  private void abrirAddOrEditCurso(boolean edit, CursoA18 curso) {
-    AddOrEditCurso dialog = context.getBean(AddOrEditCurso.class);
+  private void abrirAddOrEditAluno(boolean edit, AlunoA18 aluno) {
+    AddOrEditAluno dialog = context.getBean(AddOrEditAluno.class);
     dialog.setLocationRelativeTo(this);
     dialog.setVisible(true);
   }
 
-  public void removerCursoDaTabela(int rowIndex) {
-    CursoA18 cursoParaRemover = tableModel.getCursoAt(rowIndex);
+  public void removerAlunoDaTabela(int rowIndex) {
+    AlunoA18 alunoParaRemover = tableModel.getAlunoAt(rowIndex);
 
-    if (cursoParaRemover != null) {
-      String nomeCurso = cursoParaRemover.getNome();
+    if (alunoParaRemover != null) {
+      String nomeAluno = alunoParaRemover.getNome();
 
       int confirm = JOptionPane.showConfirmDialog(this,
-          "Tem certeza que deseja excluir o curso: " + nomeCurso + "?",
+          "Tem certeza que deseja excluir o aluno: " + nomeAluno + "?",
           "Confirmar Exclusão",
           JOptionPane.YES_NO_OPTION,
           JOptionPane.WARNING_MESSAGE);
 
       if (confirm == JOptionPane.YES_OPTION) {
         try {
-          manager.delete(cursoParaRemover);
+          manager.delete(alunoParaRemover);
 
           // sincroniza a tabela
           tableModel.setDados(manager.findAll());
 
-          JOptionPane.showMessageDialog(this, "Curso '" + nomeCurso + "' removido com sucesso!");
+          JOptionPane.showMessageDialog(this, "Aluno '" + nomeAluno + "' removido com sucesso!");
 
         } catch (Exception e) {
           // Se der erro na exclusão do banco, avisa o usuário.
-          JOptionPane.showMessageDialog(this, "Erro ao remover curso: " + e.getMessage(), "Erro de Exclusão", JOptionPane.ERROR_MESSAGE);
+          JOptionPane.showMessageDialog(this, "Erro ao remover aluno: " + e.getMessage(), "Erro de Exclusão", JOptionPane.ERROR_MESSAGE);
           e.printStackTrace();
         }
       }
     } else {
-      // Se o curso na linha era nulo por algum motivo.
-      JOptionPane.showMessageDialog(this, "Erro: Curso não encontrado na linha selecionada.", "Erro", JOptionPane.ERROR_MESSAGE);
-      System.err.println("Tentativa de remover curso nulo ou inexistente na linha: " + rowIndex);
+      // Se o aluno na linha era nulo por algum motivo.
+      JOptionPane.showMessageDialog(this, "Erro: Aluno não encontrado na linha selecionada.", "Erro", JOptionPane.ERROR_MESSAGE);
+      System.err.println("Tentativa de remover aluno nulo ou inexistente na linha: " + rowIndex);
     }
   }
 
-  // Método para editar um curso da tabela
-  public void editarCursoDaTabela(int rowIndex) {
-    CursoA18 cursoParaEditar = tableModel.getCursoAt(rowIndex);
-    AddOrEditCurso editCurso = new AddOrEditCurso(this, true, cursoParaEditar, tableModel, manager);
-    editCurso.setLocationRelativeTo(this);
-    editCurso.setVisible(true);
+  // Método para editar um aluno da tabela
+  public void editarAlunoDaTabela(int rowIndex) {
+    AlunoA18 alunoParaEditar = tableModel.getAlunoAt(rowIndex);
+    AddOrEditAluno editAluno = context.getBean(AddOrEditAluno.class);
+    editAluno.iniciarEdicao(alunoParaEditar);
+    editAluno.setLocationRelativeTo(this);
+    editAluno.setVisible(true);
   }
 
   /**
@@ -142,25 +144,24 @@ public class CursoListar extends javax.swing.JFrame {
   private void initComponents() {
 
     jScrollPane1 = new javax.swing.JScrollPane();
-    tblCursos = new javax.swing.JTable();
+    tblAlunos = new javax.swing.JTable();
     btnEmptySearchField = new javax.swing.JButton();
     txtSearch = new javax.swing.JTextField();
     btnRefresh = new javax.swing.JButton();
-    btnAddCurso = new javax.swing.JButton();
+    btnAddAluno = new javax.swing.JButton();
     btnHome = new javax.swing.JButton();
     lblBackground = new javax.swing.JLabel();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-    setTitle("cursos");
-    setPreferredSize(new java.awt.Dimension(740, 480));
+    setTitle("Alunos");
     setResizable(false);
     setSize(new java.awt.Dimension(740, 480));
     getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-    tblCursos.setBackground(new java.awt.Color(204, 204, 204));
-    tblCursos.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-    tblCursos.setForeground(new java.awt.Color(0, 0, 0));
-    tblCursos.setModel(new javax.swing.table.DefaultTableModel(
+    tblAlunos.setBackground(new java.awt.Color(204, 204, 204));
+    tblAlunos.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+    tblAlunos.setForeground(new java.awt.Color(0, 0, 0));
+    tblAlunos.setModel(new javax.swing.table.DefaultTableModel(
       new Object [][] {
 
       },
@@ -168,16 +169,16 @@ public class CursoListar extends javax.swing.JFrame {
 
       }
     ));
-    tblCursos.setGridColor(new java.awt.Color(0, 0, 0));
-    tblCursos.setSelectionBackground(new java.awt.Color(153, 153, 153));
-    tblCursos.setSelectionForeground(new java.awt.Color(204, 204, 204));
-    tblCursos.setShowGrid(true);
-    tblCursos.getTableHeader().setResizingAllowed(false);
-    tblCursos.getTableHeader().setReorderingAllowed(false);
-    jScrollPane1.setViewportView(tblCursos);
-    tblCursos.getTableHeader().setResizingAllowed(true);
-    tblCursos.setRowHeight(35);
-    tblCursos.getTableHeader().setBackground(Color.DARK_GRAY);
+    tblAlunos.setGridColor(new java.awt.Color(0, 0, 0));
+    tblAlunos.setSelectionBackground(new java.awt.Color(153, 153, 153));
+    tblAlunos.setSelectionForeground(new java.awt.Color(204, 204, 204));
+    tblAlunos.setShowGrid(true);
+    tblAlunos.getTableHeader().setResizingAllowed(false);
+    tblAlunos.getTableHeader().setReorderingAllowed(false);
+    jScrollPane1.setViewportView(tblAlunos);
+    tblAlunos.getTableHeader().setResizingAllowed(true);
+    tblAlunos.setRowHeight(35);
+    tblAlunos.getTableHeader().setBackground(Color.DARK_GRAY);
 
     getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(13, 50, 720, -1));
     jScrollPane1.getViewport().setBackground(new java.awt.Color(40, 60, 80));
@@ -213,13 +214,13 @@ public class CursoListar extends javax.swing.JFrame {
     });
     getContentPane().add(btnRefresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(369, 20, 82, 25));
 
-    btnAddCurso.setText("+");
-    btnAddCurso.addActionListener(new java.awt.event.ActionListener() {
+    btnAddAluno.setText("+");
+    btnAddAluno.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
-        btnAddCursoActionPerformed(evt);
+        btnAddAlunoActionPerformed(evt);
       }
     });
-    getContentPane().add(btnAddCurso, new org.netbeans.lib.awtextra.AbsoluteConstraints(218, 20, 82, 25));
+    getContentPane().add(btnAddAluno, new org.netbeans.lib.awtextra.AbsoluteConstraints(218, 20, 82, 25));
 
     btnHome.setText("Home");
     btnHome.addActionListener(new java.awt.event.ActionListener() {
@@ -242,10 +243,10 @@ public class CursoListar extends javax.swing.JFrame {
     dialog.setVisible(true);
   }//GEN-LAST:event_btnHomeActionPerformed
 
-  private void btnAddCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddCursoActionPerformed
-    abrirAddOrEditCurso(false, null);
+  private void btnAddAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddAlunoActionPerformed
+    abrirAddOrEditAluno(false, null);
     atualizarTabela(); // Atualiza a tabela após fechar o diálogo de adição
-  }//GEN-LAST:event_btnAddCursoActionPerformed
+  }//GEN-LAST:event_btnAddAlunoActionPerformed
 
   private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
     String nome = txtSearch.getText();
@@ -274,13 +275,13 @@ public class CursoListar extends javax.swing.JFrame {
    */
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
-  private javax.swing.JButton btnAddCurso;
+  private javax.swing.JButton btnAddAluno;
   private javax.swing.JButton btnEmptySearchField;
   private javax.swing.JButton btnHome;
   private javax.swing.JButton btnRefresh;
   private javax.swing.JScrollPane jScrollPane1;
   private javax.swing.JLabel lblBackground;
-  private javax.swing.JTable tblCursos;
+  private javax.swing.JTable tblAlunos;
   private javax.swing.JTextField txtSearch;
   // End of variables declaration//GEN-END:variables
 }

@@ -1,7 +1,7 @@
 package br.com.ifba.atividade18;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import br.com.ifba.atividade18.view.CursoListar;
+import br.com.ifba.atividade18.view.*;
 import java.util.Collections;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -17,9 +17,12 @@ public class Atividade18Application {
                 ))
                 .run(args);
 
-        CursoListar telaCursoSave = context.getBean(CursoListar.class);
-        telaCursoSave.atualizarTabela();
-        telaCursoSave.setVisible(true);
+        CursoListar telaCursoListar = context.getBean(CursoListar.class);
+        AlunoListar telaAlunoListar = context.getBean(AlunoListar.class);
+        telaCursoListar.atualizarTabela();
+        telaAlunoListar.atualizarTabela();
+        HomeForm telaInicial = context.getBean(HomeForm.class);
+        telaInicial.setVisible(true);
     }
 
 }

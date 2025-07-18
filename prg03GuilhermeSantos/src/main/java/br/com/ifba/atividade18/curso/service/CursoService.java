@@ -7,7 +7,7 @@ package br.com.ifba.atividade18.curso.service;
 import br.com.ifba.atividade18.curso.entity.CursoA18;
 import br.com.ifba.atividade18.curso.repository.CursoRepository;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 /**
@@ -15,19 +15,11 @@ import org.springframework.stereotype.Service;
  * @author gerviz
  */
 @Service
+@RequiredArgsConstructor
 public class CursoService implements CursoIService {
   //--------- OBJETO ---------
 
-  @Autowired
   private final CursoRepository cursoRepository;
-
-  
-  //--------- construtor ---------
-  public CursoService(CursoRepository cursoRepository) {
-    this.cursoRepository = cursoRepository;
-  }
-
-  
   
   //--------- MÉTODOS ---------
   

@@ -1,5 +1,6 @@
 package br.com.ifba.atividade18.util;
 
+import br.com.ifba.atividade18.view.AlunoListar;
 import br.com.ifba.atividade18.view.CursoListar;
 import java.awt.Component;
 import java.awt.Color;
@@ -20,7 +21,8 @@ public class ButtonEditor extends DefaultCellEditor {
   private boolean isPushed;
   private int currentRow;
   private int currentColumn;
-  private CursoListar mainFrame;
+  private CursoListar CursoFrame;
+  private AlunoListar AlunoFrame;
 
   private static final int ICON_SIZE = 20;
 
@@ -28,18 +30,18 @@ public class ButtonEditor extends DefaultCellEditor {
   private static final ImageIcon EDITAR_ICON;
 
   static {
-    ImageIcon originalRemoverIcon = new ImageIcon(ButtonEditor.class.getResource("/br/com/ifba/atividade12/util/images/bin.png"));
+    ImageIcon originalRemoverIcon = new ImageIcon(ButtonEditor.class.getResource("/br/com/ifba/atividade18/util/images/bin.png"));
     Image scaledRemoverImage = originalRemoverIcon.getImage().getScaledInstance(ICON_SIZE, ICON_SIZE, Image.SCALE_SMOOTH);
     REMOVER_ICON = new ImageIcon(scaledRemoverImage);
 
-    ImageIcon originalEditarIcon = new ImageIcon(ButtonEditor.class.getResource("/br/com/ifba/atividade12/util/images/pen.png"));
+    ImageIcon originalEditarIcon = new ImageIcon(ButtonEditor.class.getResource("/br/com/ifba/atividade18/util/images/pen.png"));
     Image scaledEditarImage = originalEditarIcon.getImage().getScaledInstance(ICON_SIZE, ICON_SIZE, Image.SCALE_SMOOTH);
     EDITAR_ICON = new ImageIcon(scaledEditarImage);
   }
 
   public ButtonEditor(JCheckBox checkBox, CursoListar mainFrame) {
     super(checkBox);
-    this.mainFrame = mainFrame;
+    this.CursoFrame = mainFrame;
     button = new JButton();
     button.setOpaque(true);
     button.setBorderPainted(false);
@@ -54,8 +56,32 @@ public class ButtonEditor extends DefaultCellEditor {
         if (table.getColumnName(currentColumn).equals("REMOVER")) {
           mainFrame.removerCursoDaTabela(currentRow);
 
-        } else if (table.getColumnName(currentColumn).equals("EDITAR")) { // <<-- E AQUI!
+        } else if (table.getColumnName(currentColumn).equals("EDITAR")) { 
           mainFrame.editarCursoDaTabela(currentRow);
+        }
+      }
+    });
+  }
+  
+  public ButtonEditor(JCheckBox checkBox, AlunoListar mainFrame) {
+    super(checkBox);
+    this.AlunoFrame = mainFrame;
+    button = new JButton();
+    button.setOpaque(true);
+    button.setBorderPainted(false);
+    button.setFocusPainted(false);
+    button.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+
+        fireEditingStopped();
+
+        //usa current colum para saber qual botão foi apertado
+        if (table.getColumnName(currentColumn).equals("REMOVER")) {
+          mainFrame.removerAlunoDaTabela(currentRow);
+
+        } else if (table.getColumnName(currentColumn).equals("EDITAR")) {
+          mainFrame.editarAlunoDaTabela(currentRow);
         }
       }
     });

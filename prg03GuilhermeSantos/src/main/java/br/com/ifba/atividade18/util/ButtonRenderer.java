@@ -22,12 +22,12 @@ public class ButtonRenderer extends JPanel implements TableCellRenderer {
 
   static {
     // Carrega e redimensiona o ícone da lixeira
-    ImageIcon originalRemoverIcon = new ImageIcon(ButtonRenderer.class.getResource("/br/com/ifba/atividade12/util/images/bin.png")); // Seu caminho
+    ImageIcon originalRemoverIcon = new ImageIcon(ButtonRenderer.class.getResource("/br/com/ifba/atividade18/util/images/bin.png")); // Seu caminho
     Image scaledRemoverImage = originalRemoverIcon.getImage().getScaledInstance(ICON_SIZE, ICON_SIZE, Image.SCALE_SMOOTH);
     REMOVER_ICON = new ImageIcon(scaledRemoverImage);
 
     // Carrega e redimensiona o ícone do lápis
-    ImageIcon originalEditarIcon = new ImageIcon(ButtonRenderer.class.getResource("/br/com/ifba/atividade12/util/images/pen.png")); // Seu caminho
+    ImageIcon originalEditarIcon = new ImageIcon(ButtonRenderer.class.getResource("/br/com/ifba/atividade18/util/images/pen.png")); // Seu caminho
     Image scaledEditarImage = originalEditarIcon.getImage().getScaledInstance(ICON_SIZE, ICON_SIZE, Image.SCALE_SMOOTH);
     EDITAR_ICON = new ImageIcon(scaledEditarImage);
   }

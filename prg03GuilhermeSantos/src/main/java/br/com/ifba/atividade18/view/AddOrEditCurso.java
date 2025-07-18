@@ -33,41 +33,8 @@ public class AddOrEditCurso extends javax.swing.JDialog {
     initComponents();
   }
 
-  public AddOrEditCurso(java.awt.Frame parent, boolean modal, boolean edit, CursoA18 curso) {
-    super(parent, modal);
-    initComponents();
-    //define se a tela estara no modo de edicao ou nao
-    if (edit) {
-      txtInName.setText(curso.getNome());
-      txtInCod.setText(curso.getCodigoCurso());
-      chkInActive.setSelected(curso.isAtivo());
-      btnAdd.setText("Editar");
-      lblId.setText("id: " + curso.getId());
-      editando = true;
-      cursoOriginal = curso;
-    }
-  }
-
-  public AddOrEditCurso(java.awt.Frame parent, boolean modal, boolean edit, CursoA18 curso, TableCursoModel table) {
-    super(parent, modal);
-    this.table = table;
-    initComponents();
-    if (edit && curso != null) {
-      txtInName.setText(curso.getNome());
-      txtInCod.setText(curso.getCodigoCurso());
-      chkInActive.setSelected(curso.isAtivo());
-      btnAdd.setText("Editar");
-      lblId.setText("id: " + curso.getId());
-      editando = true;
-      cursoOriginal = curso;
-    } else {
-      editando = false;
-      cursoOriginal = new CursoA18();
-    }
-  }
-
-  public AddOrEditCurso(CursoListar parent, boolean modal, boolean edit, CursoA18 curso, TableCursoModel table, CursoController controller) {
-    super(parent, modal);
+  public AddOrEditCurso(CursoListar parent, boolean edit, CursoA18 curso, TableCursoModel table, CursoController controller) {
+    super(parent);
     this.table = table;
     this.controller = controller;
     initComponents();
@@ -170,16 +137,19 @@ public class AddOrEditCurso extends javax.swing.JDialog {
           JOptionPane.ERROR_MESSAGE
       );
     } else {
-      CursoA18 curso = new CursoA18();
-      curso.setNome(txtInName.getText());
-      curso.setCodigoCurso(txtInCod.getText());
-      curso.setAtivo(chkInActive.isSelected());
+
       if (editando) {
-        curso.setId(cursoOriginal.getId());
-        controller.update(curso);
+        cursoOriginal.setAtivo(chkInActive.isSelected());
+        cursoOriginal.setNome(txtInName.getText());
+        cursoOriginal.setCodigoCurso(txtInCod.getText());
+        controller.update(cursoOriginal);
         limparCampos();
         JOptionPane.showMessageDialog(this, "Curso editado com sucesso!");
       } else {
+        CursoA18 curso = new CursoA18();
+        curso.setNome(txtInName.getText());
+        curso.setCodigoCurso(txtInCod.getText());
+        curso.setAtivo(chkInActive.isSelected());
         controller.save(curso);
         limparCampos();
         JOptionPane.showMessageDialog(this, "Curso adicionado com sucesso!");
@@ -195,7 +165,6 @@ public class AddOrEditCurso extends javax.swing.JDialog {
   /**
    * @param args the command line arguments
    */
-  
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton btnAdd;

@@ -6,7 +6,7 @@ package br.com.ifba.atividade18.curso.repository;
 
 import br.com.ifba.atividade18.curso.entity.CursoA18;
 import java.util.List;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -15,5 +15,9 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface CursoRepository extends JpaRepository<CursoA18, Long> {
-  public List<CursoA18> findByNomeContainingIgnoreCase (String nome);
+
+  public List<CursoA18> findByNomeContainingIgnoreCase(String nome);
+
+  @Query("SELECT c.nome FROM CursoA18 c")
+  public List<String> findAllNomes();
 }
